@@ -1,9 +1,10 @@
 import { collection, doc, setDoc } from "firebase/firestore/lite";
 import { AppDispatch, RootState } from "../Store";
-import { addNewBoard, savingNewBoard, setActiveBoard, setPhotos, setSaving } from "./trellifySlice";
+import { addColumn, addNewBoard, addTask, savingNewBoard, setActiveBoard, setPhotos, setSaving } from "./trellifySlice";
 import { FirebaseDB } from "../../../firebase/FirebaseConfig";
 import { fileUpload } from "../../../helpers/fileUpload";
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { generateId } from "../../../helpers/boardUtils";
+import { Column, Id, Task } from "../../pages/trellify/board/types/types";
 
 interface Board {
     id: string;
@@ -67,18 +68,32 @@ interface Board {
     };
   };
   
-  // export const startNewColumn = createAsyncThunk(
-  //   'columns/createNewColumn',
-  //   async (_, { dispatch, getState }) => {
-  //     const state = getState();
-  //     const columns = state.columns;  // Obtén el estado de las columnas actual
+  export const startNewColumn = () => {
+    return async (dispatch: AppDispatch, getState: () => RootState) => {
+      const state = getState();
+      const columns = state.trellify.columns;  // Obtén el estado de las columnas actual
   
-  //     const columnToAdd: Column = {
-  //       id: generateId(),
-  //       title: `Lista ${columns.length + 1}`,
-  //     };
+      const columnToAdd: Column = {
+        id: generateId(),
+        title: `Lista ${columns.length + 1}`,
+      };
   
-  //     // Despacha la acción para añadir la columna al estado
-  //     dispatch(addColumnToState(columnToAdd));
-  //   }
-  // );
+      // Despacha la acción para añadir la columna al estado
+      dispatch(addColumn(columnToAdd));
+    };
+  };
+
+  export const startNewTask = (columnId: Id) => {
+    return async (dispatch: AppDispatch, getState: () => RootState) => {
+      const state = getState();
+      const tasks = state.trellify.tasks;
+
+      const taskToAdd: Task = {
+        id: generateId(),
+        columnId,
+        content: `Tarea ${tasks.length + 1}`,
+      };
+
+      dispatch(addTask(taskToAdd));
+    };
+  };

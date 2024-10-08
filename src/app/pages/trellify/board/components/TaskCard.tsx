@@ -9,7 +9,7 @@ interface Props {
   updateTask: (id: Id, content: string) => void;
 }
 
-function TaskCard({ task, deleteTask, updateTask }: Props) {
+function TaskCard({ task, updateTask, deleteTask}: Props) {
   const [mouseIsOver, setMouseIsOver] = useState(false);
   const [editMode, setEditMode] = useState(false);
 
@@ -64,6 +64,15 @@ function TaskCard({ task, deleteTask, updateTask }: Props) {
     );
   }
 
+  const handleRemoveTask = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Evita que se active el modo de edición al hacer clic en el botón de eliminar
+    deleteTask(task.id); // Llama a la función que elimina la tarea
+  };
+
+  // const handleUpdateTask = (newContent: string, id: Id) => {
+  //   dispatch(updateTask({id , content: newContent}));
+  // }
+
   return (
     <div
     ref={setNodeRef}
@@ -85,9 +94,9 @@ function TaskCard({ task, deleteTask, updateTask }: Props) {
       
       {mouseIsOver && (
         <button
-          onClick={() => {
-            deleteTask(task.id);
-          }}
+          onClick={
+            handleRemoveTask
+          }
           className="stroke-white p-2 rounded opacity-60 hover:opacity-100"
         >
           <img

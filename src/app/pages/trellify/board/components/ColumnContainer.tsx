@@ -3,10 +3,13 @@ import { Column, Id, Task } from "../types/types";
 import { CSS } from "@dnd-kit/utilities";
 import { useMemo, useState } from "react";
 import TaskCard from "./TaskCard";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../../../store/Store";
+import { deleteList} from "../../../../store/trellify/trellifySlice";
+
 
 interface Props {
   column: Column;
-  deleteColumn: (id: Id) => void;
   updateColumn: (id: Id, title: string) => void;
   deleteTask: (id: Id) => void;
   createTask: (columnId: Id) => void;
@@ -15,13 +18,14 @@ interface Props {
 }
 
 const ColumnContainer = (props: Props) => {
+  const dispatch: AppDispatch = useDispatch();
   const {
     column,
-    deleteColumn,
+    // deleteColumn,
     updateColumn,
     createTask,
     tasks,
-    deleteTask,
+     deleteTask,
     updateTask,
   } = props;
   const [editMode, setEditMode] = useState(false);
@@ -61,6 +65,10 @@ const ColumnContainer = (props: Props) => {
     );
   }
 
+  const onDeleteList = (id:  Id | any) => {
+    dispatch(deleteList(id));
+  }
+
   return (
     <div
       ref={setNodeRef}
@@ -91,7 +99,7 @@ const ColumnContainer = (props: Props) => {
             }}
           />
         )}
-        <button className="bg-slate-800 rounded-md opacity-60 hover:opacity-100 " onClick={() => deleteColumn(column.id)}>
+        <button className="bg-slate-800 rounded-md opacity-60 hover:opacity-100 " onClick={() => onDeleteList (column.id)}>
           <img
             className="size-6 "
             src="src/assets/iconsButtons/delete-icon.svg"
