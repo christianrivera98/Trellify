@@ -1,32 +1,19 @@
 import {  createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Column, Id, Task } from '../../pages/trellify/board/types/types';
+import { Board, Column, Id, Task } from '../../pages/trellify/board/types/types';
 import { arrayMove } from '@dnd-kit/sortable';
+import { fetchLastBoard } from './trellifyThunks';
 
-
-interface List {
-  id: string;
-  name: string;
-  tasks: string[];
-}
-
-interface Board {
-  id: string;
-  title: string;
-  backgroundUrl: string;
-  lists: List[];
-  imageUrls: string[]; 
-}
 
 export interface TrellifyState {
   isSaving: boolean;
   title: string;
   backgroundUrl: string;
   boards: Board[];
+  activeBoard: Board | null,
   columns: Column[];
   activeColumn: Column | null,
   tasks: Task[];
   activeTask: Task | null,
-  active: Board | null;
   loading: boolean;
   error: string | null;
   imageUrls: string[];
@@ -38,15 +25,16 @@ const initialState: TrellifyState = {
   title: '',
   backgroundUrl: '',
   boards: [],
+  activeBoard: null,
   columns: [],
   activeColumn: null,
   tasks: [],
   activeTask:  null,
-  active: null,
   loading: false,
   error: null,
   imageUrls: [],
   cloudinaryImages:[]
+
 };
 
 export const trellifySlice = createSlice({
@@ -61,7 +49,7 @@ export const trellifySlice = createSlice({
       state.isSaving = false;
     },
     setActiveBoard: (state, action: PayloadAction<Board>) => {
-      state.active = action.payload;
+      state.activeBoard = action.payload;
       state.isSaving = false;
     },
     setSaving: (state) => {
@@ -69,14 +57,14 @@ export const trellifySlice = createSlice({
     },
     setPhotos: (state, action: PayloadAction<string[]>) => {
       state.imageUrls = [...state.imageUrls, ...action.payload];
-      if (state.active) {
-        state.active.imageUrls = [...state.active.imageUrls, ...action.payload];
+      if (state.activeBoard) {
+        state.activeBoard.imageUrls = [...state.activeBoard.imageUrls, ...action.payload];
       }
       state.isSaving = false;
     },
     setBoardBackground: (state, action: PayloadAction<string>) => {
-      if (state.active) {
-        state.active.backgroundUrl = action.payload;
+      if (state.activeBoard) {
+        state.activeBoard.backgroundUrl = action.payload;
         state.isSaving = false;
       }
     },
@@ -124,7 +112,7 @@ export const trellifySlice = createSlice({
       state.boards.forEach(board => {
         board.lists = board.lists.map(list => ({
           ...list,
-          tasks: list.tasks.filter(task => task !== columnId)
+          tasks: list.tasks.filter(task => task.id !== columnId)
         }));
       });
     },
@@ -138,7 +126,7 @@ export const trellifySlice = createSlice({
         state.boards.forEach(board => {
           board.lists = board.lists.map(list => ({
             ...list,
-            tasks: list.tasks.filter(task => task !== columnId)
+            tasks: list.tasks.filter(task => task.id !== columnId)
           }));
         });
     },
@@ -151,6 +139,23 @@ export const trellifySlice = createSlice({
         }
     }
   },
+
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchLastBoard.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchLastBoard.fulfilled, (state, action) => {
+        state.activeBoard = action.payload;
+        state.boards = [action.payload];
+        state.loading = false;
+      })
+      .addCase(fetchLastBoard.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      });
+  }
 });
 
 export const { savingNewBoard, setActiveBoard, setActiveColumn, reorderColumns, updateColumn, setTask, addTask, setActiveTask, deleteTask, updateTask, addNewBoard, addColumn, deleteList, setSaving, setPhotos, setBoardBackground } = trellifySlice.actions;

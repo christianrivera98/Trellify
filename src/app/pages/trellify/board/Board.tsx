@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { Column, Id, Task } from "./types/types";
+import {  Id } from "./types/types";
 import ColumnContainer from "./components/ColumnContainer";
 import {
   DndContext,
@@ -26,9 +25,10 @@ export const Board = () => {
   const dispatch: AppDispatch = useDispatch();
   const columns = useSelector((state: RootState) => state.trellify.columns );
   const tasks = useSelector((state: RootState) => state.trellify.tasks );
+  const activeColumn = useSelector((state: RootState) => state.trellify.activeColumn );
+  const activeTask = useSelector((state: RootState) => state.trellify.activeTask );
   const columnsId = columns.map((col) => col.id)
-  const [activeColumn, setActiveColumn] = useState<Column | null>(null);
-  const [activeTask, setActiveTask] = useState<Task | null>(null);
+  
   
   const sensors = useSensors(
     useSensor(PointerSensor, {
