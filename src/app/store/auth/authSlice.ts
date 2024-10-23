@@ -52,11 +52,26 @@ const authSlice = createSlice({
         state.errorMessage = action.payload || null;
     },
 
+    loginWithuserDemo: (state, action: PayloadAction<{ email: string; uid: string; displayName:string } | undefined>) => {
+      if (action.payload) {
+        state.isAuthenticated = true;
+        state.uid = "uidDemo"
+        state.displayName = "Eres un demo";
+        state.email = "demo@correo.com";
+        state.errorMessage = null;
+      } else {
+        // Maneja el caso en el que el payload es undefined
+        state.errorMessage = 'No se cargo la información del usuario';
+      }
+    },
+
     checkingCredentials: (state) => {
          state.isAuthenticated = 'checking'
-    }
+    },
+
+
   },
 });
 
-export const {login, logout, checkingCredentials} = authSlice.actions;
+export const {login, logout, loginWithuserDemo, checkingCredentials} = authSlice.actions;
 export default authSlice.reducer;

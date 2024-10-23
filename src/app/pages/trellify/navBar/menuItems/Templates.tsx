@@ -12,14 +12,14 @@ export const Templates = () => {
 
 
   return (
-    <div className="relative inline-block text-left">
+    <div className="relative inline-block text-left ">
       <button
-        className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-blue-500 rounded-md hover:bg-blue-400 hover:text-white focus:outline-none"
+        className={`inline-flex justify-between transition  w-auto px-4 py-2 text-sm font-medium ${isOpen?" bg-blue-600 text-white" : "bg-white"} text-blue-500 rounded-md hover:bg-blue-400 hover:text-white focus:outline-none`}
         onClick={onTemplates}
       >
         Plantillas
         <img
-          className="size-5"
+          className="size-5 mx-2"
           src="src/assets/iconsButtons/down-arrow.svg"
           alt="down-arrow"
         />

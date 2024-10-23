@@ -1,6 +1,7 @@
-import { logoutFirebase, signInWithEmailPassword, signInWithGoogle, signUpWithEmailPassword } from "../../../firebase/Providers";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { logoutFirebase, signInAsDemo, signInWithEmailPassword, signInWithGoogle, signUpWithEmailPassword } from "../../../firebase/Providers";
 import { AppDispatch } from "../Store";
-import { checkingCredentials, login, logout } from "./authSlice";
+import { checkingCredentials, login, loginWithuserDemo, logout } from "./authSlice";
 
 
 
@@ -86,5 +87,21 @@ export const startLogout = () => {
   return async (dispatch: AppDispatch) => {
     await logoutFirebase();
     dispatch(logout());
+  };
+};
+
+
+export const startLoginWithDemo = () => {
+  return async (dispatch: AppDispatch) => {
+      dispatch(checkingCredentials());
+
+      const result: signInResult = await signInAsDemo();
+      if (!result.ok) return dispatch(logout(result.errorMessage!));
+
+      dispatch(login({
+          email: result.email || '',
+          uid: result.uid || '',
+          displayName: result.displayName || '',
+      }));
   };
 };

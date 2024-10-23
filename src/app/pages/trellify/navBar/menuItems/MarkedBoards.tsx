@@ -1,53 +1,75 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../../../store/Store";
+import { useDispatch } from "react-redux";
+import { setActiveBoard } from "../../../../store/trellify/trellifySlice";
+import { Board, menuItemsProps } from "../../board/types/types";
 
-export const MarkedBoards = () => {
+export const MarkedBoards = ({openMenu, menuToggle}: menuItemsProps) => {
 
+    const dispatch: AppDispatch = useDispatch();
+    const favBoards =  useSelector((state: RootState) => state.trellify.favBoards);
+    const isOpen = openMenu === "marked";
+    const [loading, setloading] = useState(true)
+
+    useEffect(() => {
+      const loadBoards = async () => {
+        setloading(true);
+  
+        await new Promise((resolve) => setTimeout(resolve, 800));
+        setloading(false);
+      };
+  
+      if(isOpen){
+        loadBoards();
+      }
     
-    const [isOpen, setIsOpen] = useState(false);
-
+    }, [isOpen])
     //Funcion para abrir el menu 
 
-    const onMarked = () => {
-        setIsOpen(!isOpen);
-    }
+    const handleBoard = (board: Board) => {
+      dispatch(setActiveBoard(board));
+      menuToggle("");
+    };
 
 
   return (
     <div className="relative inline-block text-left">
       <button
-        className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-blue-500 rounded-md hover:bg-blue-400 hover:text-white focus:outline-none"
-        onClick={onMarked}
+        className={`inline-flex justify-between  w-auto px-4 py-2 text-sm font-medium ${isOpen?" bg-blue-600 text-white" : "bg-white"} text-blue-500 rounded-md hover:bg-blue-400 hover:text-white focus:outline-none`}
+        onClick={() => menuToggle(isOpen? "": "marked")}
       >
         Marcado
         <img
-          className="size-5"
+          className="size-5 mx-2"
           src="src/assets/iconsButtons/down-arrow.svg"
           alt="down-arrow"
         />
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 w-56 mt-2 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg">
-          <div className="py-1">
-            <a
-              href="#"
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+        <div className="absolute z-50 mt-2 w-56 origin-top-left bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg">
+          {loading ? (
+              <div className="flex items-center justify-center py-4">
+                <div  className="animate-spin rounded-full h-5 w-5 border-t-2 border-blue-500"/>
+              </div>
+          ): (
+          favBoards.map((board) => (
+            <div
+              className="py-1 rounded-md mb-1 flex items-center hover:bg-gray-100"
+              key={board.id}
+              onClick={() => handleBoard(board)}
             >
-              Opción 1
-            </a>
-            <a
-              href="#"
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-            >
-              Opción 2
-            </a>
-            <a
-              href="#"
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-            >
-              Opción 3
-            </a>
-          </div>
+
+              <img className="w-20 mx-2  " src={board.backgroundUrl} alt="" />
+              <a
+                href="#"
+                className="block px-4 py-2 text-sm font-medium text-gray-700 "
+              >
+                {board.title.length > 17? board.title.substring(0,17) + '...': board.title}
+              </a>
+            </div>
+          )))}
         </div>
       )}
     </div>

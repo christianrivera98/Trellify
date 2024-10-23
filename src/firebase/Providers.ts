@@ -120,3 +120,31 @@ export const signInWithEmailPassword = async (email:string, password:string) : P
 export const logoutFirebase = async() => {
     return await firebaseAuth.signOut();
 }
+
+export const signInAsDemo = async (): Promise<signInResult> => {
+    const demoEmail = "demo@correo.com"; 
+    const demoPassword = "contraseñaDemo";
+    try {
+        const result = await signInWithEmailAndPassword(firebaseAuth, demoEmail, demoPassword);
+        const { uid, displayName } = result.user;
+  
+        return {
+            ok: true,
+            email: demoEmail,
+            displayName: displayName || "Demo User",
+            uid,
+        };
+    } catch (error: any) {
+        const errorMessage = error.message;
+        const errorCode = error.code;
+  
+        return {
+            ok: false,
+            email: null,
+            displayName: null,
+            uid: null,
+            errorMessage,
+            errorCode,
+        };
+    }
+  };

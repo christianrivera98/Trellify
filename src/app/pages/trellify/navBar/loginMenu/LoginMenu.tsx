@@ -1,21 +1,16 @@
-import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../../../store/Store";
 import { useSelector } from "react-redux";
 import { startLogout } from "../../../../store/auth/Thunks";
+import { menuItemsProps } from "../../board/types/types";
 
-export const LoginMenu = () => {
-
-    const [isOpen, setIsOpen] = useState(false);
+export const LoginMenu = ({openMenu, menuToggle}: menuItemsProps) => {
+    const isOpenLogin = openMenu === "loginButton";
+    // const [isOpen, setIsOpen] = useState(false);
     const dispatch: AppDispatch = useDispatch();
     const { displayName } = useSelector((state: RootState) => state.auth);
 
-    //Funcion para abrir el menu 
-
-    const onAccountButton = () => {
-        setIsOpen(!isOpen);
-    } 
-
+    
     const onLogout = () => {
         dispatch ( startLogout());
     }
@@ -24,7 +19,7 @@ export const LoginMenu = () => {
     <div className="relative inline-block text-left mx-10">
       <button
         className="inline-flex justify-center w-max px-4 py-2 text-sm font-medium text-blue-500 rounded-md hover:bg-blue-400 hover:text-white focus:outline-none"
-        onClick={onAccountButton}
+        onClick={() => menuToggle(isOpenLogin? "": "loginButton")}
       >
         {displayName}
         <img
@@ -34,7 +29,7 @@ export const LoginMenu = () => {
         />
       </button>
 
-      {isOpen && (
+      {isOpenLogin && (
         <div className="absolute right-0 w-56 mt-2 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg">
           <div className="py-1">
             <a

@@ -69,9 +69,6 @@ function TaskCard({ task, updateTask, deleteTask}: Props) {
     deleteTask(task.id); // Llama a la función que elimina la tarea
   };
 
-  // const handleUpdateTask = (newContent: string, id: Id) => {
-  //   dispatch(updateTask({id , content: newContent}));
-  // }
 
   return (
     <div

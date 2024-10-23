@@ -5,14 +5,10 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useMemo } from 'react';
 import { startCreatingUserWithEmailPassword } from '../../../store/auth/Thunks';
+import { SignUpFormInputs } from '../types/Types';
 
 
-type SignUpFormInputs = {
-  email: string;
-  password: string;
-  name: string;
-  lastname: string;
-};
+
 
 export const SignUpPage = () => {
 

@@ -4,11 +4,8 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { checkingAuthentication, startGoogleSignIn, startLoginWithEmailPassword } from "../../../store/auth/Thunks";
 import { AppDispatch, RootState } from "../../../store/Store";
 import { useMemo } from "react";
+import { SignInFormInputs } from "../types/Types";
 
-type SignInFormInputs = {
-  email: string;
-  password: string;
-};
 
 export const SignInPage = () => {
   const { isAuthenticated, errorMessage } = useSelector((state: RootState) => state.auth);
@@ -55,7 +52,7 @@ export const SignInPage = () => {
           />
           {errors.email && <span className="text-red-500">{errors.email.message}</span>}
           
-          <label className="font-medium my-3" htmlFor="password">Contraseña</label>
+          <label className="font-medium my-2" htmlFor="password">Contraseña</label>
           <input
             className="border p-2 border-slate-300 rounded-sm w-64 hover:bg-slate-50 transition-colors"
             type="password"

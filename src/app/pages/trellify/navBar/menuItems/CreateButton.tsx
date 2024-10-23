@@ -2,9 +2,13 @@ import React, { useState } from "react";
 import { startNewBoard, startUploadingFiles } from "../../../../store/trellify/trellifyThunks";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../../store/Store";
+import { menuItemsProps } from "../../board/types/types";
+import { setBoardBackground } from "../../../../store/trellify/trellifySlice";
 
-const CreateButton = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+
+const CreateButton = ({openMenu, menuToggle}: menuItemsProps) => {
+  const isOpenMenu = openMenu === "createButton";
+  const [isOpen, setIsOpen] = useState(false);
   const [selectedBackground, setSelectedBackground] = useState<string>("");
   const [boardTitle, setBoardTitle] = useState<string>("");
   const dispatch: AppDispatch = useDispatch();
@@ -14,16 +18,23 @@ const CreateButton = () => {
 
   const handleBackgroundChange = (background: string) => {
     setSelectedBackground(background);
+    
   };
 
   const handleCreateBoard = () => {
     if (!boardTitle) {
-      alert("Es necesario indicar el título del tablero");
-      return;
+        alert("Es necesario indicar el título del tablero");
+        return;
     }
-    dispatch(startNewBoard(boardTitle, selectedBackground)); // Pasa el título y el fondo
+
+    const finalBackgroundUrl = selectedBackground; // Guarda la URL de la imagen o el color
+
+    dispatch(startNewBoard(boardTitle, finalBackgroundUrl));    
+    dispatch(setBoardBackground(finalBackgroundUrl));
+    
+    menuToggle("");
     setIsOpen(false);
-  };
+};
 
   const onFileInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = event.target;
@@ -37,8 +48,8 @@ const CreateButton = () => {
   return (
     <>
       <button
-        className="px-4 py-2 bg-blue-500 text-white rounded h-full w-auto text-sm"
-        onClick={() => setIsOpen(true)}
+        className="px-4 py-2 bg-blue-500 hover:bg-blue-400 hover:text-white focus:outline-none transition ease-in-out hover:duration-300  text-white rounded h-full w-auto text-sm"
+        onClick={() => {menuToggle(isOpenMenu? "": "createButton"), setIsOpen(true)}}
       >
         Crear Tablero
       </button>
@@ -50,7 +61,7 @@ const CreateButton = () => {
           />
 
           <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded-lg shadow-lg z-50 w-11/12 max-w-lg">
-            <h2 className="flex justify-center text-xl mb-4 font-medium">
+            <h2 className="flex justify-center text-xl  mb-4 font-medium">
               Crear Tablero
             </h2>
 
@@ -75,7 +86,7 @@ const CreateButton = () => {
             </div>
 
             <h3 className="mb-2 mx-2 text-lg font-medium">Fondo</h3>
-            <div className="flex gap-2 overflow-x-scroll mb-2 p-2">
+            <div className="flex gap-2 flex-wrap  mb-2 p-2 scrollbar-none border-b-2">
               {/* Imágenes de Cloudinary obtenidas */}
               {cloudinaryImages.concat(imageUrls).map((image, index) => (
                 <button
@@ -91,11 +102,19 @@ const CreateButton = () => {
               ))}
               <button
                 className="w-24 h-24 bg-orange-500 rounded-md"
-                onClick={() => handleBackgroundChange("#FF5722")}
+                onClick={() => handleBackgroundChange("#FF5722, #03A9F4 ")}
               />
               <button
                 className="w-24 h-24 bg-blue-500 rounded-md"
                 onClick={() => handleBackgroundChange("#03A9F4")}
+              />
+              <button
+                className="w-24 h-24 bg-indigo-500 rounded-md"
+                onClick={() => handleBackgroundChange("#6366f1")}
+              />
+              <button
+                className="w-24 h-24 bg-gray-900 rounded-md"
+                onClick={() => handleBackgroundChange("#111827")}
               />
             </div>
 
@@ -116,9 +135,9 @@ const CreateButton = () => {
               placeholder="Título del tablero"
               className="mt-1 p-2 w-full h-10 text-xl border border-gray-300 rounded-md"
             />
-            <div className="flex justify-center">
+            <div className="flex justify-center ">
               <button
-                className="mt-4 px-4 py-2 bg-green-500 text-xl text-white rounded"
+                className="mt-4 px-4 py-2 transition duration-300 hover:scale-110 ease-in-out bg-green-500 text-xl text-white rounded"
                 onClick={handleCreateBoard}
               >
                 Crear

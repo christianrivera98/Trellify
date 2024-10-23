@@ -5,12 +5,11 @@ import { useMemo, useState } from "react";
 import TaskCard from "./TaskCard";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../../store/Store";
-import { deleteList} from "../../../../store/trellify/trellifySlice";
-
+import { deleteList } from "../../../../store/trellify/trellifySlice";
 
 interface Props {
-  column: Column;
-  updateColumn: (id: Id, title: string) => void;
+  column: Column | null;
+  updateColumn: (columnId: Id, newTitle: string) => void;
   deleteTask: (id: Id) => void;
   createTask: (columnId: Id) => void;
   updateTask: (id: Id, content: string) => void;
@@ -19,36 +18,28 @@ interface Props {
 
 const ColumnContainer = (props: Props) => {
   const dispatch: AppDispatch = useDispatch();
-  const {
-    column,
-    // deleteColumn,
-    updateColumn,
-    createTask,
-    tasks,
-     deleteTask,
-    updateTask,
-  } = props;
+  const { column, updateColumn, createTask, deleteTask, updateTask } = props;
+
+  if (!column) {
+    return null; // Si column es null, no renderizas nada
+  }
+
   const [editMode, setEditMode] = useState(false);
 
+  // Usa directamente `column.tasks`
   const taskIds = useMemo(() => {
-    return tasks.map((task) => task.id)
-  },[tasks])
+    return column.tasks.map((task) => task.id);
+  }, [column.tasks]);
 
-  const {
-    setNodeRef,
-    attributes,
-    listeners,
-    transform,
-    transition,
-    isDragging,
-  } = useSortable({
-    id: column.id,
-    data: {
-      type: "Column",
-      column,
-    },
-    disabled: editMode,
-  });
+  const { setNodeRef, attributes, listeners, transform, transition, isDragging } =
+    useSortable({
+      id: column.id,
+      data: {
+        type: "Column",
+        column,
+      },
+      disabled: editMode,
+    });
 
   const style = {
     transition,
@@ -65,15 +56,15 @@ const ColumnContainer = (props: Props) => {
     );
   }
 
-  const onDeleteList = (id:  Id | any) => {
-    dispatch(deleteList(id));
-  }
+  const onDeleteList = (columnId: Id | any) => {
+    dispatch(deleteList(columnId));
+  };
 
   return (
     <div
       ref={setNodeRef}
       style={style}
-      className="bg-slate-800  w-[350px] h-[500px] max-h-[500px] rounded-md flex flex-col "
+      className="bg-slate-800 w-[350px] h-[500px] max-h-[500px] rounded-md flex flex-col"
     >
       <div
         onClick={() => {
@@ -81,12 +72,12 @@ const ColumnContainer = (props: Props) => {
         }}
         {...attributes}
         {...listeners}
-        className="bg-slate-700 text-md h-[60px] cursor-grab rounded-sm m-2 round-b-none p-3 font-bold border-2 border-slate-500 flex items-center justify-between "
+        className="bg-slate-700 text-md h-[60px] cursor-grab rounded-sm m-2 round-b-none p-3 font-bold border-2 border-slate-500 flex items-center justify-between"
       >
         {!editMode && column.title}
         {editMode && (
           <input
-          className="text-slate-100 bg-transparent border-slate-500  p-2 outline-none"
+            className="text-slate-100 bg-transparent border-slate-500 p-2 outline-none"
             value={column.title}
             onChange={(e) => updateColumn(column.id, e.target.value)}
             autoFocus
@@ -99,18 +90,14 @@ const ColumnContainer = (props: Props) => {
             }}
           />
         )}
-        <button className="bg-slate-800 rounded-md opacity-60 hover:opacity-100 " onClick={() => onDeleteList (column.id)}>
-          <img
-            className="size-6 "
-            src="src/assets/iconsButtons/delete-icon.svg"
-            alt="delete-icon"
-          />
+        <button className="bg-slate-800 rounded-md opacity-60 hover:opacity-100" onClick={() => onDeleteList(column.id)}>
+          <img className="size-6" src="src/assets/iconsButtons/delete-icon.svg" alt="delete-icon" />
         </button>
       </div>
 
-      <div className="flex flex-grow flex-col gap-4 p-2 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-950 scrollbar-track-gray-700  m-1">
+      <div className="flex flex-grow flex-col gap-4 p-2 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-950 scrollbar-track-gray-700 m-1">
         <SortableContext items={taskIds}>
-          {tasks.map((task) => (
+          {column.tasks.map((task) => (
             <TaskCard
               key={task.id}
               task={task}
@@ -124,13 +111,9 @@ const ColumnContainer = (props: Props) => {
         onClick={() => {
           createTask(column.id);
         }}
-        className="flex gap-2 h-auto w-64 mx-3 mb-2 items-center   rounded-md p-2  hover:bg-slate-900 active:bg-black "
+        className="flex gap-2 h-auto w-64 mx-3 mb-2 items-center rounded-md p-2 hover:bg-slate-900 active:bg-black"
       >
-        <img
-          className="size-5"
-          src="src/assets/iconsButtons/plus-icon.svg"
-          alt="plus-icon"
-        />
+        <img className="size-5" src="src/assets/iconsButtons/plus-icon.svg" alt="plus-icon" />
         Añadir tarea
       </button>
     </div>
