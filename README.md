@@ -73,7 +73,19 @@ npm install
 ```bash
 code .
 ```
-4. Iniciar el servidor de desarrollo:
+6. Crea un archivo .env en la raíz del proyecto con las siguientes variables (ajústalas a tu configuración de Firebase y Cloudinary):
+
+```
+VITE_FIREBASE_API_KEY=tu-api-key
+VITE_FIREBASE_AUTH_DOMAIN=tu-auth-domain
+VITE_FIREBASE_PROJECT_ID=tu-project-id
+VITE_FIREBASE_STORAGE_BUCKET=tu-storage-bucket
+VITE_FIREBASE_MESSAGING_SENDER_ID=tu-sender-id
+VITE_FIREBASE_APP_ID=tu-app-id
+VITE_CLOUDINARY_CLOUD_NAME=tu-cloud-name
+VITE_CLOUDINARY_API_KEY=tu-api-key
+```
+5. Iniciar el servidor de desarrollo:
 
 ```bash
 npm run dev
