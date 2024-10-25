@@ -10,7 +10,9 @@ export const MarkedBoards = ({openMenu, menuToggle}: menuItemsProps) => {
     const dispatch: AppDispatch = useDispatch();
     const favBoards =  useSelector((state: RootState) => state.trellify.favBoards);
     const isOpen = openMenu === "marked";
-    const [loading, setloading] = useState(true)
+    const [loading, setloading] = useState(true);
+    const isColor = (value: string) => /^#[0-9A-F]{6}$/i.test(value);
+
 
     useEffect(() => {
       const loadBoards = async () => {
@@ -61,7 +63,19 @@ export const MarkedBoards = ({openMenu, menuToggle}: menuItemsProps) => {
               onClick={() => handleBoard(board)}
             >
 
-              <img className="w-20 mx-2  " src={board.backgroundUrl} alt="" />
+<div
+                  className="w-16 h-14 mx-2 rounded-md"
+                  style={{
+                    backgroundColor: isColor(board.backgroundUrl)
+                      ? board.backgroundUrl
+                      : "transparent",
+                    backgroundImage: isColor(board.backgroundUrl)
+                      ? "none"
+                      : `url(${board.backgroundUrl})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                  }}
+                />
               <a
                 href="#"
                 className="block px-4 py-2 text-sm font-medium text-gray-700 "
@@ -69,6 +83,7 @@ export const MarkedBoards = ({openMenu, menuToggle}: menuItemsProps) => {
                 {board.title.length > 17? board.title.substring(0,17) + '...': board.title}
               </a>
             </div>
+            
           )))}
         </div>
       )}

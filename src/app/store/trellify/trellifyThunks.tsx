@@ -20,7 +20,6 @@ export const startNewBoard = (title: string, backgroundUrl: string) => {
       const newBoard = {
           id: newDoc.id,
           title,
-          // Aquí asumes que backgroundUrl puede ser un color o una URL de imagen.
           backgroundUrl: isValidColor(backgroundUrl) ? backgroundUrl : backgroundUrl, 
           lists: [],
           imageUrls: [],
@@ -40,7 +39,7 @@ export const startNewBoard = (title: string, backgroundUrl: string) => {
 const isValidColor = (color: string) => {
   const s = new Option().style;
   s.color = color;
-  return s.color !== ''; // Si el color es válido, no debería ser una cadena vacía.
+  return s.color !== ''; 
 };
 
 export const startDeleteBoard = () => {
@@ -82,25 +81,20 @@ export const startDeleteBoard = () => {
         return;
       }
   
-      // Verificar si el tablero ya está en favoritos
       const isBoardFavorited = favBoards.some(board => board.id === activeBoard.id);
   
       try {
         const boardRef = doc(FirebaseDB, `users/${uid}/favoritesboards/${activeBoard.id}`);
   
         if (isBoardFavorited) {
-          // Se elmina el tablero de favoritos en Firestore
           await deleteDoc(boardRef);
   
-          // Se actualiza el estado eliminando el tablero de favBoards
           const updatedFavBoards = favBoards.filter(board => board.id !== activeBoard.id);
           dispatch(setFavBoards(updatedFavBoards));
   
         } else {
-          // Se agrega el tablero a favoritos en Firestore
           await setDoc(boardRef, activeBoard, { merge: true });
   
-          // Se actualiza el estado añadiendo el tablero a favBoards
           dispatch(setFavBoards([...favBoards, activeBoard]));
           dispatch(isFavorite({ isFavorite: true, boardId: activeBoard.id }))
         }
@@ -171,7 +165,6 @@ export const fetchLastBoard = createAsyncThunk(
           if (boardDocSnap.exists()) {
             const boardData: Board = boardDocSnap.data() as Board;
 
-            //Recupero las listas asociadas a su respectivo tablero
 
             const listsCollectionRef = collection(FirebaseDB,`users/${uid}/boards/${lastBoardId}/lists `)
             const listsSnap = await getDocs(listsCollectionRef);
@@ -182,11 +175,9 @@ export const fetchLastBoard = createAsyncThunk(
               boardId: doc.data().boardId || []
             }));
 
-            //Se agregan las listas a boardData bajo la propiedad lists
             boardData.lists = lists;
 
             dispatch(setActiveBoard(boardData));
-            // Devuelve el tablero recuperado
             return boardData;
           }
         }
@@ -251,12 +242,10 @@ export const startUpdatingBoardTitle = (boardId: string,newTitle: string) =>{
     return async (dispatch: AppDispatch) => {
       dispatch(setSaving());
   
-    //  Sube los archivos a Cloudinary y obtiene las URLs
     const fileUploadPromises = files.map(file => fileUpload(file));
       const photosUrls = await Promise.all(fileUploadPromises);
       const validPhotosUrls = photosUrls.filter((url): url is string => url !== null);
   
-     // Actualiza el estado de Redux con las nuevas imágenes subidas
       if (validPhotosUrls.length > 0) {
         dispatch(setPhotos(validPhotosUrls));
       }
@@ -280,7 +269,6 @@ export const startUpdatingBoardTitle = (boardId: string,newTitle: string) =>{
         boardId: ""
       };
   
-      // Despacha la acción para añadir la columna al estado
       dispatch(addColumn(columnToAdd));
 
       const boardRef = doc(FirebaseDB, `users/${state.auth.uid}/boards/${activeBoard.id}`);
@@ -305,7 +293,6 @@ export const startNewTask = (columnId: Id) => {
       return;
     }
 
-    // Encontrar el índice de la columna en el array de lists
     const columnIndex = activeBoard.lists.findIndex((col) => col.id === columnId);
 
     if (columnIndex === -1) {
@@ -316,27 +303,19 @@ export const startNewTask = (columnId: Id) => {
     const taskToAdd: Task = {
       id: generateId(),
       columnId,
-      content: `Tarea ${state.trellify.tasks.length + 1}`,
+      content: `Tarea nueva`,
     };
 
-    // Despacha la acción para agregar la tarea
     dispatch(addTask(taskToAdd));
 
-    // Crear una copia del array de listas
     const updatedLists = [...activeBoard.lists];
 
-    // Asegúrate de que también estás haciendo una copia del array de tasks de la columna
     const updatedColumn = {
       ...updatedLists[columnIndex],
-      tasks: [...updatedLists[columnIndex].tasks, taskToAdd],  // Crea una nueva copia de tasks y agrega la nueva tarea
+      tasks: [...updatedLists[columnIndex].tasks, taskToAdd], 
     };
-
     // Reemplazar la columna modificada en la copia del array de listas
     updatedLists[columnIndex] = updatedColumn;
-
-    // Aquí podrías actualizar Firestore si es necesario
-
-    // Si deseas guardar los cambios en Firestore:
     const boardRef = doc(FirebaseDB, `users/${state.auth.uid}/boards/${activeBoard.id}`);
     try {
       await setDoc(boardRef, { lists: updatedLists }, { merge: true });

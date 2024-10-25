@@ -13,7 +13,7 @@ interface Props {
   deleteTask: (id: Id) => void;
   createTask: (columnId: Id) => void;
   updateTask: (id: Id, content: string) => void;
-  tasks: Task[];
+  // tasks: Task[];
 }
 
 const ColumnContainer = (props: Props) => {

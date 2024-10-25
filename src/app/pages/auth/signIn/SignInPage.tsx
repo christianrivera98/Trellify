@@ -25,10 +25,10 @@ export const SignInPage = () => {
   };
 
   return (
-    <div className="bg-[url('src/assets/BgSignIn.png')] bg-contain bg-center bg-no-repeat h-screen w-screen">
+    <div className="bg-[url('src/assets/BgSignIn.png')] bg-cover bg-center bg-no-repeat min-h-screen w-full">
       <section className="flex flex-col justify-center items-center min-h-screen">
-        <Link to="/" className="flex items-center text-6xl font-extrabold tracking-wide mb-10">
-          <img src="./logo.svg" alt="logo" className="h-20 w-20 mr-2" />
+        <Link to="/" className="flex items-center text-6xl font-extrabold tracking-wide mb-10 text-slate-100">
+          <img src="./logo.svg" alt="logo" className="h-20 w-20 mr-2 " />
           Trellify
         </Link>
         {errorMessage && (
@@ -37,7 +37,7 @@ export const SignInPage = () => {
             <span className="block sm:inline">{errorMessage}</span>
           </div>
         )}
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col border-slate-300 border border-solid rounded-lg shadow-lg p-20">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col border-slate-300 bg-slate-100 shadow-xl shadow-gray-700 border border-solid rounded-lg  p-20">
           <h2 className="font-semibold text-xl mb-8">Inicia sesión para continuar</h2>
           <label className="font-medium mb-2" htmlFor="email">Correo</label>
           <input

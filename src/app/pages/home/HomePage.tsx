@@ -1,4 +1,4 @@
-import { Features } from "./homeComponents/body/Features";
+import { Features2 } from "./homeComponents/body/Features2";
 import { Hero } from "./homeComponents/body/Hero";
 import { Testimonials } from "./homeComponents/body/Testimonials";
 import { Footer } from "./homeComponents/footer/Footer";
@@ -10,7 +10,7 @@ export const HomePage = () => {
       <div>
         <NavBar />
         <Hero />
-        <Features/>
+        <Features2/>
         <Testimonials/>
         <Footer/>
       </div>

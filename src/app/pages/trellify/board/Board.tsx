@@ -62,6 +62,8 @@ export const Board = () => {
   };
 
   const handleDragStart = (event: DragStartEvent) => {
+    // console.log("DRAG SYART", event);
+    
     onDragStart(event, dispatch);
   };
 
@@ -71,11 +73,11 @@ export const Board = () => {
     }
   };
 
-  const handleDragOver = (event: DragOverEvent,  state: any) => {
-    
-      onDragOver(event, dispatch, activeBoard?.lists.flatMap(col => col.tasks), state);
-    
-  };
+const handleDragOver = (event: DragOverEvent) => {
+  if (activeBoard) {
+    onDragOver(event, dispatch, activeBoard.lists);
+  }
+};
 
   const handleUpdateColumn = (id: Id, newTitle: string) => {
     updateColumnTitle(id, newTitle, dispatch);
@@ -102,7 +104,7 @@ export const Board = () => {
         onDragOver={handleDragOver}
       >
         <div className="m-auto gap-4 flex">
-          <SortableContext items={(activeBoard?.lists || []).map((list) => list.id.toString())}>
+          <SortableContext items={(activeBoard?.lists || []).map((list) => list.id)}>
             {activeBoard?.lists.map((list) => (
               <ColumnContainer
                 key={list.id}
@@ -111,7 +113,7 @@ export const Board = () => {
                 createTask={handleAddTask}
                 deleteTask={handleRemoveTask}
                 updateTask={handleUpdateTask}
-                tasks={list.tasks}
+                // tasks={list.tasks}
               />
             ))}
           </SortableContext>

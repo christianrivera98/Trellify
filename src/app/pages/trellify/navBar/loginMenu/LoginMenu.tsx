@@ -3,17 +3,23 @@ import { AppDispatch, RootState } from "../../../../store/Store";
 import { useSelector } from "react-redux";
 import { startLogout } from "../../../../store/auth/Thunks";
 import { menuItemsProps } from "../../board/types/types";
+import {  useNavigate } from "react-router-dom";
+
 
 export const LoginMenu = ({openMenu, menuToggle}: menuItemsProps) => {
     const isOpenLogin = openMenu === "loginButton";
-    // const [isOpen, setIsOpen] = useState(false);
+    const navigate = useNavigate();
     const dispatch: AppDispatch = useDispatch();
     const { displayName } = useSelector((state: RootState) => state.auth);
 
     
     const onLogout = () => {
-        dispatch ( startLogout());
-    }
+      dispatch(startLogout()).then(() => {
+        setTimeout(() => {
+          navigate("/home");
+        }, 100);
+    })
+  };
     
   return (
     <div className="relative inline-block text-left mx-10">
@@ -34,17 +40,14 @@ export const LoginMenu = ({openMenu, menuToggle}: menuItemsProps) => {
           <div className="py-1">
             <a
               href="#"
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-            >
-              Tema
-            </a>
-            <a
-              href="#"
+              
               onClick={onLogout}
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              className="block px-4 py-2 text-sm text-gray-700 font-medium hover:bg-gray-100"
             >
               Cerrar sesión
             </a>
+           
+            
           </div>
         </div>
       )}

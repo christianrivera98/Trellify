@@ -4,7 +4,7 @@ import { AppDispatch, RootState } from '../../../store/Store';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useMemo } from 'react';
-import { startCreatingUserWithEmailPassword } from '../../../store/auth/Thunks';
+import { startCreatingUserWithEmailPassword, startGoogleSignIn } from '../../../store/auth/Thunks';
 import { SignUpFormInputs } from '../types/Types';
 
 
@@ -24,15 +24,18 @@ export const SignUpPage = () => {
 
     const displayName = `${name} ${lastname}`.trim();
 
-    console.log('Dispatching startCreatingUserWithEmailPassword with:', { email, password, displayName }); // Agrega este console.log
     dispatch(startCreatingUserWithEmailPassword({ email, password, displayName }));
 
   };
 
+  const onGoogle = () => {
+    dispatch(startGoogleSignIn());
+  };
+
   return (
-    <div className="bg-[url('src/assets/BgSignIn.png')] bg-contain bg-center bg-no-repeat h-screen w-screen">
+    <div className="bg-[url('src/assets/BgSignIn.png')]  bg-cover bg-center bg-no-repeat min-h-screen w-full">
       <section className="flex flex-col justify-center items-center min-h-screen">
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col border-slate-300 border border-solid rounded-lg shadow-lg p-20">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col border-slate-300 bg-slate-100 shadow-xl shadow-gray-700 border border-solid rounded-lg  p-20">
           <h2 className="font-semibold text-xl mb-8">Regístrate para continuar</h2>
 
           <label className="font-medium mb-2" htmlFor="name">Nombre/s:</label>
@@ -85,7 +88,7 @@ export const SignUpPage = () => {
             Registrarte
           </button>
           <h2 className="font-medium text-slate-500 my-3 flex justify-center text-base">O continua con:</h2>
-          <button className="border p-2 border-slate-300 rounded-sm items-center flex justify-center gap-3 hover:bg-slate-50 transition-colors">
+          <button onClick={onGoogle} className="border p-2 border-slate-300 rounded-sm items-center flex justify-center gap-3 hover:bg-slate-50 transition-colors">
             <img className="size-8" src="src/assets/iconsButtons/google.svg" alt="" />
             <p className="font-medium">Google</p>
           </button>

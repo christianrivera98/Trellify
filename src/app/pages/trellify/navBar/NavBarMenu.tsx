@@ -13,7 +13,7 @@ export const NavBarMenu = () => {
     setOpenMenu((prevMenu) => (prevMenu === menu ? null : menu));
   }
   return (
-    <div className="top-0 h-16 w-full bg-white shadow-sm border-b flex items-center  ">
+    <div className="top-0 h-16 w-full bg-slate-100 shadow-sm border-b flex items-center  ">
       <div className="flex gap-5  w-full  mx-10 text-3xl tracking-wide items-center">
         <div className="md:max-w-screen-2xl  text-3xl font-extrabold tracking-wide ">
           <Link to="dashBoard" className="flex items-center">

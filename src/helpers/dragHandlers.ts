@@ -1,89 +1,124 @@
 import { DragEndEvent, DragOverEvent, DragStartEvent } from "@dnd-kit/core";
-import { Column, Task } from "../app/pages/trellify/board/types/types";
 import { AppDispatch } from "../app/store/Store";
-import { reorderColumns, setActiveColumn, setActiveTask, setTask } from "../app/store/trellify/trellifySlice";
+import { reorderColumns, setActiveColumn, setActiveTask, setTask, setListsToActiveBoard } from "../app/store/trellify/trellifySlice";
+import { reorderArray } from "./reorderArray";
 import { arrayMove } from "@dnd-kit/sortable";
+import { Column, Task, Id } from "../app/pages/trellify/board/types/types";
 
-export const onDragStart = (
-    event: DragStartEvent,
-    dispatch: AppDispatch
-    
-) => {
-    const {current} = event.active.data;
+// Manejo de inicio de arrastre
+export const onDragStart = (event: DragStartEvent, dispatch: AppDispatch) => {
+  const activeType = event.active.data.current?.type;
+  if (activeType === "Column") {
+    dispatch(setActiveColumn(event.active.data.current?.column));
+  } else if (activeType === "Task") {
+    dispatch(setActiveTask(event.active.data.current?.task));
+  }
+};
 
-    if (current?.type === "Column") {
-        const column: Column = current.task;
-        dispatch(setActiveColumn(column))
+// Manejo de finalización de arrastre
+export const onDragEnd = (event: DragEndEvent, dispatch: AppDispatch, columns: Column[]) => {
+  dispatch(setActiveColumn(null));
+  dispatch(setActiveTask(null));
+
+  const { active, over } = event;
+
+  if (!over) return;
+
+  const activeId = active.id as Id;
+  const overId = over.id as Id;
+
+  if (activeId === overId) return;
+
+  const activeType = active.data.current?.type;
+  const overType = over.data.current?.type;
+
+  if (activeType === "Column" && overType === "Column") {
+    const activeColumnIndex = columns.findIndex((col) => col.id === activeId);
+    const overColumnIndex = columns.findIndex((col) => col.id === overId);
+
+    if (activeColumnIndex !== -1 && overColumnIndex !== -1) {
+      dispatch(
+        reorderColumns({ fromIndex: activeColumnIndex, toIndex: overColumnIndex })
+      );
     }
+  } else if (activeType === "Task" && overType === "Task") {
+    const activeColumn = columns.find((col) => col.tasks.some((task) => task.id === activeId));
+    const overColumn = columns.find((col) => col.tasks.some((task) => task.id === overId));
 
-    if (current?.type === "Task") {
-        const task: Task = current.task;
-        dispatch(setActiveTask(task))
+    if (activeColumn && overColumn) {
+      const activeTaskIndex = activeColumn.tasks.findIndex((task) => task.id === activeId);
+      const overTaskIndex = overColumn.tasks.findIndex((task) => task.id === overId);
+
+      if (activeColumn.id === overColumn.id) {
+        const updatedTasks = arrayMove(activeColumn.tasks, activeTaskIndex, overTaskIndex);
+        dispatch(setTask({ columnId: activeColumn.id, tasks: updatedTasks }));
+      } else {
+        // Cambiar la columna de la tarea
+        const taskToMove = activeColumn.tasks[activeTaskIndex];
+        taskToMove.columnId = overColumn.id;
+
+        // Remover la tarea de la columna activa y agregarla a la columna de destino
+        const updatedActiveTasks = [...activeColumn.tasks];
+        updatedActiveTasks.splice(activeTaskIndex, 1);
+        dispatch(setTask({ columnId: activeColumn.id, tasks: updatedActiveTasks }));
+
+        const updatedOverTasks = [...overColumn.tasks];
+        updatedOverTasks.splice(overTaskIndex, 0, taskToMove);
+        dispatch(setTask({ columnId: overColumn.id, tasks: updatedOverTasks }));
+      }
     }
-}
+  }
+};
 
-export const onDragEnd = (
-    event: DragEndEvent,
-    dispatch: AppDispatch,
-    columns: Column[]
-) => {
-    const {active, over} = event;
-
-    if (!over || active.id === over.id) return;
-
-    const activeIndex = columns.findIndex((col) =>col.id === active.id);
-    const overIndex = columns.findIndex((col) => col.id ===over.id);
-    
-    dispatch(reorderColumns({fromIndex:activeIndex, toIndex: overIndex}))
-}
-
+// Manejo de arrastre sobre
 export const onDragOver = (
-    event: DragOverEvent,
-    dispatch: AppDispatch,
-    tasks: Task[]
+  event: DragOverEvent, 
+  dispatch: AppDispatch, 
+  columns: Column[]
 ) => {
-    const { active, over } = event;
+  const { active, over } = event;
 
-    if (!over) return;
+  if (!over) return;
 
-    const activeId = active.id;
-    const overId = over.id;
+  const activeId = active.id as Id;
+  const overId = over.id as Id;
 
-    if (activeId === overId) return;
+  // Si el elemento activo y el sobre el que se pasa son iguales, no hacer nada
+  if (activeId === overId) return;
 
-    const isActiveATask = active.data.current?.type === "Task";
-    const isOverATask = over.data.current?.type === "Task";
+  // Identificar si el elemento arrastrado y el sobre el que se pasa son tareas
+  const isActiveTask = active.data.current?.type === "Task";
+  const isOverTask = over.data.current?.type === "Task";
 
-    if(!isActiveATask) return;
+  if (isActiveTask && isOverTask) {
+    // Encontrar las columnas de origen y destino
+    const activeColumn = columns.find((col) => col.tasks.some((task) => task.id === activeId));
+    const overColumn = columns.find((col) => col.tasks.some((task) => task.id === overId));
 
-    if (isActiveATask && isOverATask ) {
-        const activeIndex = tasks.findIndex(t=> t.id === activeId);
-        const overIndex = tasks.findIndex(t=> t.id === overId);
+    if (activeColumn && overColumn) {
+      const activeTaskIndex = activeColumn.tasks.findIndex((task) => task.id === activeId);
+      const overTaskIndex = overColumn.tasks.findIndex((task) => task.id === overId);
 
+      // Si las tareas pertenecen a la misma columna
+      if (activeColumn.id === overColumn.id) {
+        // Crear una copia inmutable de las tareas de la columna activa
+        const updatedTasks = arrayMove([...activeColumn.tasks], activeTaskIndex, overTaskIndex);
+        dispatch(setTask({ columnId: activeColumn.id, tasks: updatedTasks }));
+      } else {
+        // Crear una copia del objeto de la tarea que se va a mover para evitar mutaciones
+        const taskToMove = { ...activeColumn.tasks[activeTaskIndex], columnId: overColumn.id };
 
-      const updateTasks = arrayMove(tasks,activeIndex, overIndex);
-      
-      const updateTask = {
-        ...updateTasks[activeIndex],
-        columnId: tasks[overIndex].columnId
-      };
+        // Crear una copia inmutable de las tareas de la columna activa y remover la tarea
+        const updatedActiveTasks = [...activeColumn.tasks];
+        updatedActiveTasks.splice(activeTaskIndex, 1);
+        dispatch(setTask({ columnId: activeColumn.id, tasks: updatedActiveTasks }));
 
-        updateTasks[activeIndex] = updateTask;
-
-        dispatch(setTask(updateTasks));
-      };
-    
-
-    const isOverAColumn = over.data.current?.type === "Column";
-
-    if(isActiveATask &&  isOverAColumn){
-        const activeIndex = tasks.findIndex(t=> t.id === activeId);
-       
-
-      const updatedTasks = [...tasks];
-      updatedTasks[activeIndex] = {...updatedTasks[activeIndex], columnId: overId};
-      
-
-        dispatch(setTask(updatedTasks));
-      };
+        // Crear una copia inmutable de las tareas de la columna de destino e insertar la tarea movida
+        const updatedOverTasks = [...overColumn.tasks];
+        updatedOverTasks.splice(overTaskIndex, 0, taskToMove);
+        dispatch(setTask({ columnId: overColumn.id, tasks: updatedOverTasks }));
+      }
     }
+  }
+};
+

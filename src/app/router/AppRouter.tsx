@@ -5,20 +5,11 @@ import { SignUpPage } from "../pages/auth/signUp/SignUpPage";
 import { Dashboard } from "../pages/trellify/Dashboard";
 import { Spinner } from "../../ui/components/Spinner";
 import { useCheckAuth } from "../../hooks/useCheckAuth";
-import { useDispatch } from "react-redux"; // Importamos useDispatch
-// import { useEffect } from "react";
-// import { resetActiveBoard } from "../store/trellify/trellifySlice";
-// Importa tu acción para reiniciar el estado
+
 
 const AppRouter = () => {
   const { isAuthenticated } = useCheckAuth();
-  const dispatch = useDispatch();
-  const location = useLocation(); // Hook para obtener la ruta actual
-
-  // useEffect para reiniciar el estado de activeBoard cuando la ruta cambie
-  // useEffect(() => {
-  //   dispatch(resetActiveBoard()); // Reinicia el estado de activeBoard
-  // }, [location.pathname, dispatch]); // Ejecuta cada vez que la ruta cambie
+ 
 
   if (isAuthenticated === "checking") {
     return <Spinner />;

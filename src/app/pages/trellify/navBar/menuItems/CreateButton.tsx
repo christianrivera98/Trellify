@@ -102,7 +102,7 @@ const CreateButton = ({openMenu, menuToggle}: menuItemsProps) => {
               ))}
               <button
                 className="w-24 h-24 bg-orange-500 rounded-md"
-                onClick={() => handleBackgroundChange("#FF5722, #03A9F4 ")}
+                onClick={() => handleBackgroundChange("#f97316")}
               />
               <button
                 className="w-24 h-24 bg-blue-500 rounded-md"

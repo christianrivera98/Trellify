@@ -1,8 +1,8 @@
 export const Testimonials = () => {
   return (
-    <section className="testimonials py-16 bg-white mt-12">
+    <section className="testimonials py-16 bg-slate-950 mb-">
       <div className="max-w-6xl mx-auto px-4 text-center">
-        <h2 className="text-3xl font-bold mb-12">
+        <h2 className="tracking-tight  text-8xlxl md:text-4xl lg:text-5xl leading-tight font-medium text-white italic mb-10">
           Lo que dicen nuestros usuarios
         </h2>
         <div className="flex flex-col md:flex-row space-y-8 md:space-y-0 md:space-x-8">
@@ -22,7 +22,7 @@ export const Testimonials = () => {
               </p>
             </div>
           </div>
-          <div className="bg-white p-6 flex border-solid border-inherit rounded-lg border-2 shadow-xl shadow-gray-500">
+          <div className="bg-white p-6 flex border-solid border-inherit rounded-lg border-2 shadow-xl shadow-gray-700">
             <img
               className="size-32 rounded-full "
               src="src/assets/woman.jpg"
