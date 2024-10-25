@@ -9,7 +9,7 @@ export const Testimonials = () => {
           <div className="bg-white p-6 rounded-lg flex border-solid border-inherit border-2 shadow-xl shadow-gray-500">
             <img
               className="size-32 rounded-full "
-              src="src/assets/men.jpg"
+              src="https://res.cloudinary.com/ma-cloud/image/upload/v1729896138/findy/men_auyaef.jpg"
               alt="menPhoto"
             />
             <div>
@@ -25,7 +25,7 @@ export const Testimonials = () => {
           <div className="bg-white p-6 flex border-solid border-inherit rounded-lg border-2 shadow-xl shadow-gray-700">
             <img
               className="size-32 rounded-full "
-              src="src/assets/woman.jpg"
+              src="https://res.cloudinary.com/ma-cloud/image/upload/v1729896139/findy/woman_ng7gvr.jpg"
               alt="womanPhoto"
             />
             <div>

@@ -91,7 +91,7 @@ const ColumnContainer = (props: Props) => {
           />
         )}
         <button className="bg-slate-800 rounded-md opacity-60 hover:opacity-100" onClick={() => onDeleteList(column.id)}>
-          <img className="size-6" src="src/assets/iconsButtons/delete-icon.svg" alt="delete-icon" />
+          <img className="size-6" src="https://res.cloudinary.com/ma-cloud/image/upload/v1729896370/findy/delete-icon_jafp73.svg" alt="delete-icon" />
         </button>
       </div>
 
@@ -113,7 +113,7 @@ const ColumnContainer = (props: Props) => {
         }}
         className="flex gap-2 h-auto w-64 mx-3 mb-2 items-center rounded-md p-2 hover:bg-slate-900 active:bg-black"
       >
-        <img className="size-5" src="src/assets/iconsButtons/plus-icon.svg" alt="plus-icon" />
+        <img className="size-5" src="https://res.cloudinary.com/ma-cloud/image/upload/v1729896372/findy/plus-icon_aerbfs.svg" alt="plus-icon" />
         Añadir tarea
       </button>
     </div>

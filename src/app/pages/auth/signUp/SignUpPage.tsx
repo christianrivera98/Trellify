@@ -33,7 +33,7 @@ export const SignUpPage = () => {
   };
 
   return (
-    <div className="bg-[url('src/assets/BgSignIn.png')]  bg-cover bg-center bg-no-repeat min-h-screen w-full">
+    <div className="bg-[url('https://res.cloudinary.com/ma-cloud/image/upload/v1729896138/findy/BgSignIn_kuh8yv.png')]  bg-cover bg-center bg-no-repeat min-h-screen w-full">
       <section className="flex flex-col justify-center items-center min-h-screen">
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col border-slate-300 bg-slate-100 shadow-xl shadow-gray-700 border border-solid rounded-lg  p-20">
           <h2 className="font-semibold text-xl mb-8">Regístrate para continuar</h2>
@@ -89,7 +89,7 @@ export const SignUpPage = () => {
           </button>
           <h2 className="font-medium text-slate-500 my-3 flex justify-center text-base">O continua con:</h2>
           <button onClick={onGoogle} className="border p-2 border-slate-300 rounded-sm items-center flex justify-center gap-3 hover:bg-slate-50 transition-colors">
-            <img className="size-8" src="src/assets/iconsButtons/google.svg" alt="" />
+            <img className="size-8" src="https://res.cloudinary.com/ma-cloud/image/upload/v1729896371/findy/google_ovadzb.svg" alt="" />
             <p className="font-medium">Google</p>
           </button>
           <div className="flex gap-2 my-6 justify-center">

@@ -10,7 +10,7 @@ export const Hero = () => {
         </p>
       </div>
       <div className="w-full lg:w-1/2 mt-5 lg:mt-0">
-        <img className="w-full rounded-lg" src="src/assets/teamWork.jpg" alt="teamWork" />
+        <img className="w-full rounded-lg" src="https://res.cloudinary.com/ma-cloud/image/upload/v1729896236/findy/teamWork_zy7emg.jpg" alt="teamWork" />
       </div>
     </section>
   );

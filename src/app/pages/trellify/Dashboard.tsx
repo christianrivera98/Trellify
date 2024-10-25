@@ -156,7 +156,7 @@ export const Dashboard: React.FC = () => {
                         ) : (
                           <img
                             className=" hover:scale-110  size-7 transition-transform ease-in-out duration-150"
-                            src="src/assets/iconsButtons/save_icon.svg"
+                            src="https://res.cloudinary.com/ma-cloud/image/upload/v1729896372/findy/save_icon_zrjqui.svg"
                             alt=""
                           />
                         )}
@@ -197,7 +197,7 @@ export const Dashboard: React.FC = () => {
                       >
                         <img
                           className="size-7 "
-                          src="src/assets/iconsButtons/delete-icon.svg"
+                          src="https://res.cloudinary.com/ma-cloud/image/upload/v1729896370/findy/delete-icon_jafp73.svg"
                           alt="delete-icon"
                         />
                       </button>

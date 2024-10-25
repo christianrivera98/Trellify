@@ -123,7 +123,7 @@ const handleDragOver = (event: DragOverEvent) => {
           >
             <img
               className="size-5"
-              src="src/assets/iconsButtons/plus-icon.svg"
+              src="https://res.cloudinary.com/ma-cloud/image/upload/v1729896372/findy/plus-icon_aerbfs.svg"
               alt="plus-icon"
             />
             Añadir lista

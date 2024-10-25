@@ -98,7 +98,7 @@ function TaskCard({ task, updateTask, deleteTask}: Props) {
         >
           <img
             className="size-6"
-            src="src/assets/iconsButtons/delete-icon.svg"
+            src="https://res.cloudinary.com/ma-cloud/image/upload/v1729896370/findy/delete-icon_jafp73.svg"
             alt="delete-icon"
           />
         </button>
