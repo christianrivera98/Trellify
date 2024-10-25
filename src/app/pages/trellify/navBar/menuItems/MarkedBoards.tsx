@@ -27,7 +27,6 @@ export const MarkedBoards = ({openMenu, menuToggle}: menuItemsProps) => {
       }
     
     }, [isOpen])
-    //Funcion para abrir el menu 
 
     const handleBoard = (board: Board) => {
       dispatch(setActiveBoard(board));

@@ -1,9 +1,8 @@
 import { DragEndEvent, DragOverEvent, DragStartEvent } from "@dnd-kit/core";
 import { AppDispatch } from "../app/store/Store";
-import { reorderColumns, setActiveColumn, setActiveTask, setTask, setListsToActiveBoard } from "../app/store/trellify/trellifySlice";
-import { reorderArray } from "./reorderArray";
+import { reorderColumns, setActiveColumn, setActiveTask, setTask } from "../app/store/trellify/trellifySlice";
 import { arrayMove } from "@dnd-kit/sortable";
-import { Column, Task, Id } from "../app/pages/trellify/board/types/types";
+import { Column, Id } from "../app/pages/trellify/board/types/types";
 
 // Manejo de inicio de arrastre
 export const onDragStart = (event: DragStartEvent, dispatch: AppDispatch) => {
@@ -70,7 +69,7 @@ export const onDragEnd = (event: DragEndEvent, dispatch: AppDispatch, columns: C
   }
 };
 
-// Manejo de arrastre sobre
+// Manejo de arrastre sobre una columna o lista
 export const onDragOver = (
   event: DragOverEvent, 
   dispatch: AppDispatch, 

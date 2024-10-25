@@ -1,7 +1,6 @@
-import { signInWithEmailAndPassword } from "firebase/auth";
 import { logoutFirebase, signInAsDemo, signInWithEmailPassword, signInWithGoogle, signUpWithEmailPassword } from "../../../firebase/Providers";
 import { AppDispatch } from "../Store";
-import { checkingCredentials, login, loginWithuserDemo, logout } from "./authSlice";
+import { checkingCredentials, login, logout } from "./authSlice";
 import { clearDashBoardLogOut } from "../trellify/trellifySlice";
 
 

@@ -13,7 +13,7 @@ const CreateButton = ({openMenu, menuToggle}: menuItemsProps) => {
   const [boardTitle, setBoardTitle] = useState<string>("");
   const dispatch: AppDispatch = useDispatch();
 
-  // Obtener imágenes desde el estado de Redux (incluyendo las subidas recientemente)
+  // Obtener imágenes desde el estado de Redux 
   const { cloudinaryImages, imageUrls } = useSelector((state: RootState) => state.trellify);
 
   const handleBackgroundChange = (background: string) => {
@@ -27,7 +27,7 @@ const CreateButton = ({openMenu, menuToggle}: menuItemsProps) => {
         return;
     }
 
-    const finalBackgroundUrl = selectedBackground; // Guarda la URL de la imagen o el color
+    const finalBackgroundUrl = selectedBackground; 
 
     dispatch(startNewBoard(boardTitle, finalBackgroundUrl));    
     dispatch(setBoardBackground(finalBackgroundUrl));
@@ -42,7 +42,7 @@ const CreateButton = ({openMenu, menuToggle}: menuItemsProps) => {
     if (!files || files.length === 0) return;
 
     const fileArray = Array.from(files);
-    dispatch(startUploadingFiles(fileArray)); // Sube los archivos
+    dispatch(startUploadingFiles(fileArray)); 
   };
 
   return (

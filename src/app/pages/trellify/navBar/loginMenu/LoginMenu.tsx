@@ -30,7 +30,7 @@ export const LoginMenu = ({openMenu, menuToggle}: menuItemsProps) => {
         {displayName}
         <img
           className="size-5"
-          src="src/assets/iconsButtons/down-arrow.svg"
+          src="https://res.cloudinary.com/ma-cloud/image/upload/v1729896371/findy/down-arrow_zypvli.svg"
           alt="down-arrow"
         />
       </button>

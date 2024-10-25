@@ -1,4 +1,4 @@
-import { Column, Id } from "./types/types";
+import { Id } from "./types/types";
 import ColumnContainer from "./components/ColumnContainer";
 import {
   DndContext,
@@ -29,14 +29,13 @@ import {
   onDragOver,
   onDragStart,
 } from "../../../../helpers/dragHandlers";
-import { deleteTask, reorderColumns, setActiveBoard } from "../../../store/trellify/trellifySlice";
+import { deleteTask, setActiveBoard } from "../../../store/trellify/trellifySlice";
 import { useEffect } from "react";
 
 export const Board = () => {
   const dispatch: AppDispatch = useDispatch();
   const activeBoard = useSelector((state: RootState) => state.trellify.activeBoard);
   const activeTask = useSelector((state: RootState) => state.trellify.activeTask);
-  const state= useSelector((state: RootState) => state.trellify);
   const { uid } = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
@@ -62,7 +61,6 @@ export const Board = () => {
   };
 
   const handleDragStart = (event: DragStartEvent) => {
-    // console.log("DRAG SYART", event);
     
     onDragStart(event, dispatch);
   };

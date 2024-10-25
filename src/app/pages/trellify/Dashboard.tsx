@@ -13,10 +13,6 @@ import {
   startUpdatingBoardTitle,
   toggleFavBoard,
 } from "../../store/trellify/trellifyThunks";
-import {
-  deleteBoard,
-  setActiveBoard,
-} from "../../store/trellify/trellifySlice";
 import { NothingSelectedView } from "./NothingSelectedView";
 
 export const Dashboard: React.FC = () => {
