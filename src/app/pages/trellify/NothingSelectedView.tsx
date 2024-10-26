@@ -14,7 +14,7 @@ export const NothingSelectedView = () => {
                 ¡¿Que estás esperando?! 
             </p>
             <div className="justify-center flex">
-                <img className="size-96" src="src/assets/imageBg1.svg" alt="" />
+                <img className="size-96" src="https://res.cloudinary.com/ma-cloud/image/upload/v1729900911/findy/imageBg1_l0guwh.svg" alt="" />
             </div>
         </div>
     </div>
