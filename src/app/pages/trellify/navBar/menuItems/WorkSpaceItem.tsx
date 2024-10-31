@@ -30,6 +30,8 @@ export const WorkSpaceItem = ({openMenu, menuToggle}: menuItemsProps) => {
   const handleBoard = (board: Board) => {
     dispatch(setActiveBoard(board));
     menuToggle("")
+    console.log(menuToggle);
+    
   };
 
   return (

@@ -22,9 +22,9 @@ export const LoginMenu = ({openMenu, menuToggle}: menuItemsProps) => {
   };
     
   return (
-    <div className="relative inline-block text-left mx-10">
+    <div className="relative inline-block text-left mx-5 md:mx-10">
       <button
-        className="inline-flex justify-center w-max px-4 py-2 text-sm font-medium text-blue-500 rounded-md hover:bg-blue-400 hover:text-white focus:outline-none"
+        className="inline-flex justify-center w-max md:px-4 py-2 text-sm font-medium text-blue-500 rounded-md hover:bg-blue-400 hover:text-white focus:outline-none"
         onClick={() => menuToggle(isOpenLogin? "": "loginButton")}
       >
         {displayName}

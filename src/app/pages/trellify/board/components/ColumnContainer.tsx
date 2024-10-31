@@ -51,7 +51,7 @@ const ColumnContainer = (props: Props) => {
       <div
         ref={setNodeRef}
         style={style}
-        className="bg-slate-600 opacity-40 border-2 w-[350px] h-[500px] max-h-[500px] rounded-md"
+        className="bg-slate-600 opacity-40 border-2 md:w-[350px] md:h-[500px] max-h-[500px] rounded-md"
       ></div>
     );
   }

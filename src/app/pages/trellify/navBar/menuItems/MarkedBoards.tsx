@@ -40,7 +40,7 @@ export const MarkedBoards = ({openMenu, menuToggle}: menuItemsProps) => {
         className={`inline-flex justify-between  w-auto px-4 py-2 text-sm font-medium ${isOpen?" bg-blue-600 text-white" : "bg-white"} text-blue-500 rounded-md hover:bg-blue-400 hover:text-white focus:outline-none`}
         onClick={() => menuToggle(isOpen? "": "marked")}
       >
-        Marcado
+        Tableros Marcados
         <img
           className="size-5 mx-2"
           src="https://res.cloudinary.com/ma-cloud/image/upload/v1729896371/findy/down-arrow_zypvli.svg"

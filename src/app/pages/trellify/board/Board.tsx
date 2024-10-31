@@ -101,7 +101,7 @@ const handleDragOver = (event: DragOverEvent) => {
         onDragEnd={handleDragEnd}
         onDragOver={handleDragOver}
       >
-        <div className="m-auto gap-4 flex">
+<div className="ml-7 md:m-auto gap-4 flex flex-wrap md:flex-nowrap">
           <SortableContext items={(activeBoard?.lists || []).map((list) => list.id)}>
             {activeBoard?.lists.map((list) => (
               <ColumnContainer

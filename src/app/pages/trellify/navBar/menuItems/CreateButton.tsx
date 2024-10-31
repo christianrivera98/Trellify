@@ -1,40 +1,43 @@
 import React, { useState } from "react";
-import { startNewBoard, startUploadingFiles } from "../../../../store/trellify/trellifyThunks";
+import {
+  startNewBoard,
+  startUploadingFiles,
+} from "../../../../store/trellify/trellifyThunks";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../../store/Store";
 import { menuItemsProps } from "../../board/types/types";
 import { setBoardBackground } from "../../../../store/trellify/trellifySlice";
 
-
-const CreateButton = ({openMenu, menuToggle}: menuItemsProps) => {
+const CreateButton = ({ openMenu, menuToggle }: menuItemsProps) => {
   const isOpenMenu = openMenu === "createButton";
   const [isOpen, setIsOpen] = useState(false);
   const [selectedBackground, setSelectedBackground] = useState<string>("");
   const [boardTitle, setBoardTitle] = useState<string>("");
   const dispatch: AppDispatch = useDispatch();
 
-  // Obtener imágenes desde el estado de Redux 
-  const { cloudinaryImages, imageUrls } = useSelector((state: RootState) => state.trellify);
+  // Obtener imágenes desde el estado de Redux
+  const { cloudinaryImages, imageUrls } = useSelector(
+    (state: RootState) => state.trellify
+  );
 
   const handleBackgroundChange = (background: string) => {
     setSelectedBackground(background);
-    
   };
 
   const handleCreateBoard = () => {
     if (!boardTitle) {
-        alert("Es necesario indicar el título del tablero");
-        return;
+      alert("Es necesario indicar el título del tablero");
+      return;
     }
 
-    const finalBackgroundUrl = selectedBackground; 
+    const finalBackgroundUrl = selectedBackground;
 
-    dispatch(startNewBoard(boardTitle, finalBackgroundUrl));    
+    dispatch(startNewBoard(boardTitle, finalBackgroundUrl));
     dispatch(setBoardBackground(finalBackgroundUrl));
-    
+
     menuToggle("");
     setIsOpen(false);
-};
+  };
 
   const onFileInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = event.target;
@@ -42,14 +45,29 @@ const CreateButton = ({openMenu, menuToggle}: menuItemsProps) => {
     if (!files || files.length === 0) return;
 
     const fileArray = Array.from(files);
-    dispatch(startUploadingFiles(fileArray)); 
+    dispatch(startUploadingFiles(fileArray));
   };
 
   return (
     <>
+      <div className="flex justify-center items-center ml-2  md:text-white  bg-blue-500 hover:bg-blue-400 focus:outline-none transition ease-in-out hover:duration-300 rounded  md:hidden">
+        <button onClick={() => {
+              menuToggle(isOpenMenu ? "" : "createButton"), setIsOpen(true);
+            }} className=" flex ">
+          <img
+            
+            src="https://res.cloudinary.com/ma-cloud/image/upload/v1730310457/findy/white_plus_fsz3bn.svg"
+            alt="plusBoard"
+            className="w-6 h-6  hover:bg-blue-400"
+          />
+        </button>
+      </div>
+
       <button
-        className="px-4 py-2 bg-blue-500 hover:bg-blue-400 hover:text-white focus:outline-none transition ease-in-out hover:duration-300  text-white rounded h-full w-auto text-sm"
-        onClick={() => {menuToggle(isOpenMenu? "": "createButton"), setIsOpen(true)}}
+        className="px-4 py-2 bg-blue-500 hover:bg-blue-400 hover:text-white focus:outline-none transition ease-in-out hover:duration-300  text-white rounded  hidden md:block md:h-full  md:w-auto text-sm"
+        onClick={() => {
+          menuToggle(isOpenMenu ? "" : "createButton"), setIsOpen(true);
+        }}
       >
         Crear Tablero
       </button>
@@ -67,7 +85,7 @@ const CreateButton = ({openMenu, menuToggle}: menuItemsProps) => {
 
             {/* Previsualización del fondo seleccionado */}
             <div
-              className={`flex justify-center items-center w-full h-32 bg-cover rounded-md mb-4`}
+              className={`flex justify-center items-center w-full  md:h-32 bg-cover rounded-md mb-4`}
               style={{
                 height: "18vh",
                 backgroundImage: selectedBackground.startsWith("#")
@@ -81,12 +99,12 @@ const CreateButton = ({openMenu, menuToggle}: menuItemsProps) => {
               <img
                 src="./logo.svg"
                 alt="Superposición"
-                className="absolute size-36"
+                className="absolute size-16 md:size-36"
               />
             </div>
 
             <h3 className="mb-2 mx-2 text-lg font-medium">Fondo</h3>
-            <div className="flex gap-2 flex-wrap  mb-2 p-2 scrollbar-none border-b-2">
+            <div className="flex h-52 gap-2 flex-wrap  mb-2 p-2 scrollbar overflow-y-auto border-b-2">
               {/* Imágenes de Cloudinary obtenidas */}
               {cloudinaryImages.concat(imageUrls).map((image, index) => (
                 <button
@@ -96,7 +114,7 @@ const CreateButton = ({openMenu, menuToggle}: menuItemsProps) => {
                   <img
                     src={image}
                     alt={`Fondo ${index + 1}`}
-                    className="w-24 h-24 object-cover rounded-md"
+                    className="w-24 h-24  object-cover rounded-md"
                   />
                 </button>
               ))}
@@ -122,7 +140,12 @@ const CreateButton = ({openMenu, menuToggle}: menuItemsProps) => {
             <div className="flex ">
               <label className="my-2 bg-blue-500 hover:bg-blue-700 text-white font-medium text-xs py-2 px-4 rounded cursor-pointer">
                 Subir imagen...
-                <input type="file" className="hidden" multiple onChange={onFileInputChange} />
+                <input
+                  type="file"
+                  className="hidden"
+                  multiple
+                  onChange={onFileInputChange}
+                />
               </label>
             </div>
 

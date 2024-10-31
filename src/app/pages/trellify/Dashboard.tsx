@@ -88,11 +88,11 @@ export const Dashboard: React.FC = () => {
   return (
     <div className="h-screen w-screen flex flex-col">
       <NavBarMenu />
-      <div className="overflow-hidden flex-1">
+      <div className="overflow-hidden overflow-y-auto flex-1">
         {activeBoard ? (
           <div
             key={activeBoard.id}
-            className="bg-cover h-full w-full bg-center p-2 text-white flex flex-col"
+            className="bg-cover min-h-screen w-screen md:h-full md:w-full bg-center p-2 text-white flex flex-col"
             style={{
               backgroundImage: isImageUrl(activeBoard.backgroundUrl)
                 ? `url(${activeBoard.backgroundUrl})`
@@ -115,7 +115,7 @@ export const Dashboard: React.FC = () => {
                 {isEditing ? (
                   <input
                     type="text"
-                    className="text-3xl bg-opacity-70 bg-slate-400 h-12 w-64 rounded-xl flex justify-center items-center mx-10 my-5"
+                    className="flex items-center  bg-slate-400 h-12 md:h-12 w-fit md:w-fit rounded-xl md:mx-10 my-5 bg-opacity-70"
                     value={newTitle}
                     onChange={(e) => setNewTitle(e.target.value)}
                     onBlur={handleTitleUpdate}
@@ -127,9 +127,9 @@ export const Dashboard: React.FC = () => {
                     autoFocus
                   />
                 ) : (
-                  <div className="flex items-center  bg-slate-400 h-12 w-fit rounded-xl mx-10 my-5 bg-opacity-70">
+                  <div className="flex items-center  bg-slate-400 md:h-12 w-fit md:w-fit rounded-xl md:mx-10 ml-7 md: my-5 bg-opacity-70">
                     <h3
-                      className="text-3xl ml-6 mr-4 h-12 w-fit flex justify-center items-center "
+                      className="md:text-3xl ml-6 mr-4 md:h-12  w-fit flex justify-center items-center "
                       onClick={() => setIsEditing(true)}
                     >
                       {activeBoard.title.length > 17
@@ -193,7 +193,7 @@ export const Dashboard: React.FC = () => {
                   </div>
                 )}
 
-                <div className="flex-grow overflow-hidden flex">
+                <div className="flex-grow md:ml-8 overflow-hidden flex">
                   <div className="flex overflow-x-auto">
                     <Board />
                   </div>
