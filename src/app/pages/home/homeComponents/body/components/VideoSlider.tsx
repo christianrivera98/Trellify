@@ -1,25 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-
-interface SlideProps {
-  videoUrl: string;
-  title: string;
-}
-
-const slides: SlideProps[] = [
-  {
-    videoUrl: "https://res.cloudinary.com/ma-cloud/video/upload/v1729820018/findy/personaliza_tableros_m3m0m0.mp4",
-    title: "Personaliza tú tablero con distintos fondos",
-  },
-  {
-    videoUrl: "https://res.cloudinary.com/ma-cloud/video/upload/v1729819659/findy/crea_tasks_tdzarg.mp4",
-    title: "Crea tus tareas y organiza tu día de manera efectiva",
-  },
-  {
-    videoUrl: "https://res.cloudinary.com/ma-cloud/video/upload/v1729819660/findy/gest_tasks_cl6yw3.mp4",
-    title: "Organízalas según tus necesidades",
-  },
-];
+import { slides } from "../data/slides";
 
 const VideoSlider: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -30,11 +11,20 @@ const VideoSlider: React.FC = () => {
     if (currentVideo) currentVideo.play();
   }, [currentIndex]);
 
-  const handlePrev = () => setCurrentIndex((prevIndex) => (prevIndex === 0 ? slides.length - 1 : prevIndex - 1));
+  const handlePrev = () =>
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? slides.length - 1 : prevIndex - 1
+    );
 
-  const handleNext = () => setCurrentIndex((prevIndex) => (prevIndex === slides.length - 1 ? 0 : prevIndex + 1));
+  const handleNext = () =>
+    setCurrentIndex((prevIndex) =>
+      prevIndex === slides.length - 1 ? 0 : prevIndex + 1
+    );
 
-  const handleVideoEnd = () => setCurrentIndex((prevIndex) => (prevIndex === slides.length - 1 ? 0 : prevIndex + 1));
+  const handleVideoEnd = () =>
+    setCurrentIndex((prevIndex) =>
+      prevIndex === slides.length - 1 ? 0 : prevIndex + 1
+    );
 
   return (
     <div className="relative w-full max-w-6xl mx-auto mt-6 px-4 sm:px-8">
@@ -86,7 +76,12 @@ const VideoSlider: React.FC = () => {
       </motion.button>
       <div className="flex justify-center mt-4 space-x-2">
         {slides.map((_, index) => (
-          <div key={index} className={`w-3 h-3 rounded-full ${index === currentIndex ? "bg-blue-500" : "bg-gray-400"}`} />
+          <div
+            key={index}
+            className={`w-3 h-3 rounded-full ${
+              index === currentIndex ? "bg-blue-500" : "bg-gray-400"
+            }`}
+          />
         ))}
       </div>
     </div>
