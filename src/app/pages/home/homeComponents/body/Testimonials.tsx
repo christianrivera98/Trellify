@@ -3,7 +3,7 @@ import { testimonials } from "./data/testimonials";
 
 export const Testimonials = () => {
   return (
-    <section className="py-16 bg-gradient-to-b from-slate-900 to-blue-950 text-white">
+    <section className="py-16  text-white">
       <div className="max-w-6xl mx-auto px-4 text-center">
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-medium italic mb-10">
           Lo que dicen nuestros usuarios
@@ -36,3 +36,5 @@ export const Testimonials = () => {
     </section>
   );
 };
+
+// bg-gradient-to-b from-slate-900 to-blue-950

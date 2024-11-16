@@ -1,42 +1,76 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { AppDispatch, RootState } from "../../../../store/Store";
-import { useDispatch } from "react-redux";
 import { useMemo } from "react";
-import { checkingAuthentication, startLoginWithDemo } from "../../../../store/auth/Thunks"; // Asegúrate de importar el nuevo thunk
+import {
+  checkingAuthentication,
+  startLoginWithDemo,
+} from "../../../../store/auth/Thunks";
+import { FiLogIn, FiUser } from "react-icons/fi";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 export const NavBar = () => {
-    const { isAuthenticated } = useSelector((state: RootState) => state.auth);
-    const dispatch: AppDispatch = useDispatch();
-    const isAuthenticating = useMemo(() => isAuthenticated === 'checking', [isAuthenticated]);
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+  const dispatch: AppDispatch = useDispatch();
+  const isAuthenticating = useMemo(
+    () => isAuthenticated === "checking",
+    [isAuthenticated]
+  );
 
-    const onSubmitDemo = () => {
-        dispatch(checkingAuthentication());
-        dispatch(startLoginWithDemo()); 
-    };
+  const onSubmitDemo = () => {
+    if (!isAuthenticating) {
+      dispatch(checkingAuthentication());
+      dispatch(startLoginWithDemo());
+    }
+  };
 
-    return (
-        <nav className="font-sans top-0 h-14 w-full px-4 bg-slate-100 shadow-sm fixed border-b flex items-center justify-between">
-            <div className="md:max-w-screen-2xl w-full mx-auto text-3xl font-extrabold tracking-wide">
-                <div className="flex items-center ">
-                    <img src="./logo.svg" alt="logo" className="h-7 w-7 mr-2 " />
-                    Trellify
-                </div>
-            </div>
-            <div className="flex mx-auto text-clip text-sm lg:text-sm font-medium px-px m-4 space-x-4">
-                <button className="focus:ring focus:outline-none bg-white w-16 p-2  md:scale-x-105 md:w-24   rounded-full sm:rounded-3xl md:rounded-2xl lg:rounded-xl xl:rounded-lg  border-2 border-slate-200 transition ease-in-out delay-150  hover:scale-95 duration-300">
-                    <Link to={"/sign-in"}>
-                        Login
-                    </Link>
-                </button>
-                <button 
-                    type="button" 
-                    disabled={isAuthenticating} 
-                    onClick={onSubmitDemo} 
-                    className="focus:ring focus:outline-none bg-black w-16 p-2 md:scale-x-105 md:w-24 rounded-full sm:rounded-3xl md:rounded-2xl lg:rounded-xl xl:rounded-lg  text-white  transition ease-in-out delay-150  hover:scale-95 duration-300">
-                    Demo
-                </button>
-            </div>
-        </nav>
-    );
-}
+  return (
+    <nav className="fixed z-20 top-0 w-full px-3 md:px-10  py-4 bg-[#00013A] shadow-lg">
+      <div className="flex justify-between items-center md:max-w-screen mx-auto">
+        {/* Logo y Título */}
+        <div className="flex items-center text-white">
+          <img
+            src="./logo.svg"
+            alt="logo"
+            className="h-8 w-8  mr-1 md:mr-3 md:scale-150"
+          />
+          <span className="text-2xl lg:text-4xl font-bold tracking-wide">
+            Trellify
+          </span>
+        </div>
+
+        {/* Botones */}
+        <div className="flex space-x-4">
+          <Link to="/sign-in">
+            <button
+              aria-label="Login"
+              className="flex items-center h-10 text-sm md:text-base font-medium px-4 py-2 bg-white text-[#1e40af] rounded-full shadow-md transition duration-300 ease-in-out transform hover:scale-105 hover:bg-[#1e3a8a] hover:text-white"
+            >
+              <FiLogIn className="mr-2" />
+              Login
+            </button>
+          </Link>
+
+          <button
+            type="button"
+            aria-label="Demo"
+            disabled={isAuthenticating}
+            onClick={onSubmitDemo}
+            className={`flex items-center h-10 px-4 py-2 text-sm md:text-base rounded-full transition duration-300 ease-in-out transform ${
+              isAuthenticating
+                ? "bg-gray-400 text-white cursor-not-allowed"
+                : "bg-[#1e40af] text-white hover:scale-105 hover:bg-[#1e3a8a] shadow-md"
+            }`}
+          >
+            {isAuthenticating ? (
+              <AiOutlineLoading3Quarters className="animate-spin mr-2" />
+            ) : (
+              <FiUser className=" mr-2" />
+            )}
+            {isAuthenticating ? "Loading..." : "Demo"}
+          </button>
+        </div>
+      </div>
+    </nav>
+  );
+};

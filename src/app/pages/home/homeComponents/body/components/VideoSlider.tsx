@@ -63,22 +63,22 @@ const VideoSlider: React.FC = () => {
       <motion.button
         onClick={handlePrev}
         className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-70 text-white p-2 rounded-full"
-        whileHover={{ scale: 1.2 }}
+        whileHover={{ scale: 1.2, background: "#ffff", color: "black" }}
       >
         &#8249;
       </motion.button>
       <motion.button
         onClick={handleNext}
         className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-70 text-white p-2 rounded-full"
-        whileHover={{ scale: 1.2 }}
+        whileHover={{ scale: 1.2, background: "#ffff", color: "black" }}
       >
         &#8250;
       </motion.button>
-      <div className="flex justify-center mt-4 space-x-2">
+      <div className="flex justify-center mt-4 mb-4 space-x-2">
         {slides.map((_, index) => (
           <div
             key={index}
-            className={`w-3 h-3 rounded-full ${
+            className={`w-3 h-1 rounded-full ${
               index === currentIndex ? "bg-blue-500" : "bg-gray-400"
             }`}
           />

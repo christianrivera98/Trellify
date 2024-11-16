@@ -51,11 +51,13 @@ const CreateButton = ({ openMenu, menuToggle }: menuItemsProps) => {
   return (
     <>
       <div className="flex justify-center items-center ml-2  md:text-white  bg-blue-500 hover:bg-blue-400 focus:outline-none transition ease-in-out hover:duration-300 rounded  md:hidden">
-        <button onClick={() => {
-              menuToggle(isOpenMenu ? "" : "createButton"), setIsOpen(true);
-            }} className=" flex ">
+        <button
+          onClick={() => {
+            menuToggle(isOpenMenu ? "" : "createButton"), setIsOpen(true);
+          }}
+          className=" flex "
+        >
           <img
-            
             src="https://res.cloudinary.com/ma-cloud/image/upload/v1730310457/findy/white_plus_fsz3bn.svg"
             alt="plusBoard"
             className="w-6 h-6  hover:bg-blue-400"
@@ -74,18 +76,17 @@ const CreateButton = ({ openMenu, menuToggle }: menuItemsProps) => {
       {isOpen && (
         <>
           <div
-            className="fixed inset-0 bg-black bg-opacity-50 z-50"
+            className="fixed inset-0 bg-black bg-opacity-50 z-[100]"
             onClick={() => setIsOpen(false)}
           />
 
-          <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded-lg shadow-lg z-50 w-11/12 max-w-lg">
-            <h2 className="flex justify-center text-xl  mb-4 font-medium">
+          <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded-lg shadow-2xl z-[110] w-11/12 max-w-lg">
+            <h2 className="flex justify-center text-xl mb-4 font-medium">
               Crear Tablero
             </h2>
-
             {/* Previsualización del fondo seleccionado */}
             <div
-              className={`flex justify-center items-center w-full  md:h-32 bg-cover rounded-md mb-4`}
+              className={`flex justify-center items-center w-full md:h-32 bg-cover rounded-md mb-4`}
               style={{
                 height: "18vh",
                 backgroundImage: selectedBackground.startsWith("#")

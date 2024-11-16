@@ -1,22 +1,67 @@
+import { motion } from "framer-motion";
 
 export const NothingSelectedView = () => {
   return (
-    <div className="flex justify-center bg-slate-950 items-center h-screen   ">
-        <div className=" bg-slate-100 md:h-4/6 lg:h-4/6 lg:w-9/12 xl:w-7/12 rounded-3xl w-10/12 h-2/6 md:mb-16 md:rounded-2xl lg:rounded-2xl xl:rounded-full flex flex-col justify-center items-center  ">
-            
-            <h1 className="md:text-4xl lg:text-6xl font-extrabold tracking-tight text-3xl text-center md:mb-6 lg:mb-4">
-                ¡Bienvenido a <span className="text-blue-500">Trellify</span>!
-            </h1>
-            <p className="md:text-lg text-pretty mb-4 font-medium  peer-focus-within: text-center">
-                Inicia creando un tablero para que puedas empezar a gestionar tus tareas o actividades.
-            </p>
-            <p className="text-center text-2xl md:text-3xl font-medium italic">
-                ¡¿Que estás esperando?! 
-            </p>
-            <div className="justify-center flex">
-                <img className="size-36 md:size-80 lg:size-72 2xl:size-96" src="https://res.cloudinary.com/ma-cloud/image/upload/v1729900911/findy/imageBg1_l0guwh.svg" alt="" />
-            </div>
-        </div>
+<div className="flex justify-center items-center h-screen bg-gradient-to-br from-blue-950 via-slate-950 to-blue-900 ">
+  <motion.div
+    className="bg-gradient-to-r  from-blue-800 to-blue-900 p-8 rounded-3xl shadow-2xl text-white w-10/12 md:w-8/12 lg:w-6/12"
+    initial={{ opacity: 0, scale: 0.8 }}
+    animate={{ opacity: 1, scale: 1 }}
+    transition={{ duration: 0.8, ease: "easeOut" }}
+  >
+        <motion.h1
+          className="text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-wide text-center mb-6"
+          initial={{ y: -30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
+          ¡Bienvenido a <span className="text-blue-500">Trellify</span>!
+        </motion.h1>
+
+        <motion.p
+          className="text-lg md:text-xl text-gray-200 font-medium text-center mb-4"
+          initial={{ y: -20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+        >
+          Comienza creando un tablero para gestionar tus tareas y actividades.
+        </motion.p>
+
+        <motion.p
+          className="text-lg md:text-2xl italic font-medium text-center text-blue-300 mb-8"
+          initial={{ y: -20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.6, ease: "easeOut", delay: 0.4 }}
+        >
+          ¿Qué estás esperando?
+        </motion.p>
+
+        <motion.div
+          className="flex justify-center"
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
+        >
+          <img
+            className="w-64 md:w-72 lg:w-80"
+            src="https://res.cloudinary.com/ma-cloud/image/upload/v1729900911/findy/imageBg1_l0guwh.svg"
+            alt="Welcome Illustration"
+          />
+        </motion.div>
+
+        <motion.div
+          className="absolute -top-10 -left-10 w-24 h-24 bg-blue-500 rounded-full blur-3xl opacity-30 z-0"
+          initial={{ scale: 0.5, opacity: 0 }}
+          animate={{ scale: 1, opacity: 0.3 }}
+          transition={{ duration: 1.2, ease: "easeOut", delay: 0.8 }}
+        ></motion.div>
+        <motion.div
+          className="absolute -bottom-10 -right-10 w-32 h-32 bg-purple-500 rounded-full blur-3xl opacity-30 z-0"
+          initial={{ scale: 0.5, opacity: 0 }}
+          animate={{ scale: 1, opacity: 0.3 }}
+          transition={{ duration: 1.2, ease: "easeOut", delay: 1 }}
+        ></motion.div>
+      </motion.div>
     </div>
-  )
-}
+  );
+};

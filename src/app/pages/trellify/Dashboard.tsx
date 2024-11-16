@@ -86,9 +86,9 @@ export const Dashboard: React.FC = () => {
   };
 
   return (
-    <div className="h-screen w-screen flex flex-col">
+    <div className=" h-screen w-screen flex flex-col">
       <NavBarMenu />
-      <div className="overflow-hidden overflow-y-auto flex-1">
+      <div className=" overflow-hidden overflow-y-auto flex-1">
         {activeBoard ? (
           <div
             key={activeBoard.id}
@@ -127,7 +127,7 @@ export const Dashboard: React.FC = () => {
                     autoFocus
                   />
                 ) : (
-                  <div className="flex items-center  bg-slate-400 md:h-12 w-fit md:w-fit rounded-xl md:mx-10 ml-7 md: my-5 bg-opacity-70">
+                  <div className="flex items-center  bg-slate-400 md:h-12 w-fit md:w-fit rounded-xl md:mx-10 ml-7 md: my-5 mt-20 bg-opacity-70">
                     <h3
                       className="md:text-3xl ml-6 mr-4 md:h-12  w-fit flex justify-center items-center "
                       onClick={() => setIsEditing(true)}
