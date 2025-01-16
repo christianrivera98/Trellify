@@ -89,8 +89,8 @@ const handleDragOver = (event: DragOverEvent) => {
     dispatch(startNewTask(columnId));
   };
 
-  const handleUpdateTask = (id: Id, newContent: string) => {
-    updateTaskContent(id, newContent, dispatch);
+  const handleUpdateTask = (id: Id, title:string, description:string) => {
+    updateTaskContent(id, title, description, dispatch);
   };
 
   return (

@@ -9,7 +9,7 @@ import { setActiveTask } from "../../../../store/trellify/trellifySlice";
 interface Props {
   task: Task;
   deleteTask: (id: Id) => void;
-  updateTask: (id: Id, content: string) => void;
+  updateTask: (id: Id, title: string, description: string) => void;
 }
 
 function TaskCard({ task, deleteTask }: Props) {
