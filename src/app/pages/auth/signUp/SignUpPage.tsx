@@ -33,7 +33,7 @@ export const SignUpPage = () => {
   };
 
   return (
-    <div className="bg-[url('public/assets/image/BgSignIn_optimized.webp')]  bg-cover bg-center bg-no-repeat min-h-screen w-full">
+    <div className="bg-[url('assets/image/BgSignIn_optimized.webp')]  bg-cover bg-center bg-no-repeat min-h-screen w-full">
       <section className="flex flex-col justify-center items-center min-h-screen">
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col border-slate-300 bg-slate-100 shadow-xl shadow-gray-700 border border-solid rounded-lg  p-20">
           <h2 className="font-semibold text-xl mb-8">Regístrate para continuar</h2>

@@ -43,7 +43,7 @@ export const WorkSpaceItem = ({openMenu, menuToggle}: menuItemsProps) => {
         Espacios de trabajo
         <img
           className="size-5 mx-2"
-          src="public/assets/iconsButtons/down-arrow.svg"
+          src="assets/iconsButtons/down-arrow.svg"
           alt="down-arrow"
         />
       </button>

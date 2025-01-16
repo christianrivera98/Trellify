@@ -30,7 +30,7 @@ export const LoginMenu = ({openMenu, menuToggle}: menuItemsProps) => {
         {displayName}
         <img
           className="size-5"
-          src="public/assets/iconsButtons/down-arrow.svg"
+          src="assets/iconsButtons/down-arrow.svg"
           alt="down-arrow"
         />
       </button>

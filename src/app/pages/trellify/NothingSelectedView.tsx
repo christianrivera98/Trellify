@@ -44,7 +44,7 @@ export const NothingSelectedView = () => {
         >
           <img
             className="w-64 md:w-72 lg:w-80"
-            src="public/assets/image/imageBg1_optimized.svg"
+            src="assets/image/imageBg1_optimized.svg"
             alt="Welcome Illustration"
           />
         </motion.div>

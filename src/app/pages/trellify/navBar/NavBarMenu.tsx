@@ -51,7 +51,7 @@ export const NavBarMenu = () => {
         >
           Más
           <img
-            src="https://res.cloudinary.com/ma-cloud/image/upload/v1729896371/findy/down-arrow_zypvli.svg"
+            src="assets/iconsButtons/down-arrow.svg"
             alt="menuMas"
             className="h-4 w-4 ml-1"
           />

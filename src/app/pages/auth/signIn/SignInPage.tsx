@@ -25,7 +25,7 @@ export const SignInPage = () => {
   };
 
   return (
-    <div className="bg-[url('public/assets/image/BgSignIn_optimized.webp')] bg-cover bg-center bg-no-repeat min-h-screen w-full">
+    <div className="bg-[url('assets/image/BgSignIn_optimized.webp')] bg-cover bg-center bg-no-repeat min-h-screen w-full">
       <section className="flex flex-col justify-center items-center min-h-screen">
         <Link to="/" className="flex items-center text-6xl font-extrabold tracking-wide mb-10 text-slate-100">
           <img src="./logo.svg" alt="logo" className="h-20 w-20 mr-2 " />
