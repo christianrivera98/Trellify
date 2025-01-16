@@ -142,7 +142,7 @@ export const Hero = () => {
         >
           <img
             className="rounded-xl shadow-lg hidden lg:block"
-            src="public/assets/image/teamWork_optimized.webp"
+            src="assets/image/teamWork_optimized.webp"
             alt="teamWork"
           />
         </motion.div>
