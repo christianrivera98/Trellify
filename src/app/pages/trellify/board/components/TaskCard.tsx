@@ -12,7 +12,7 @@ interface Props {
   updateTask: (id: Id, content: string) => void;
 }
 
-function TaskCard({ task, updateTask, deleteTask }: Props) {
+function TaskCard({ task, deleteTask }: Props) {
   const [mouseIsOver, setMouseIsOver] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false); // Estado para el modal
   const dispatch = useDispatch();
