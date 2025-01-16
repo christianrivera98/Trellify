@@ -30,7 +30,7 @@ export const HomePage = () => {
         <NavBar />
       </motion.div>
 
-      <div className="bg-fixed bg-[url('assets/image/fondoHome_optimized.webp')] bg-cover bg-center">
+      <div className="bg-fixed bg-[url('/assets/image/fondoHome_optimized.webp')] bg-cover bg-center">
         <Hero />
         <Features2 />
         <Testimonials />
