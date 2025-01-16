@@ -61,7 +61,7 @@ const ColumnContainer = (props: Props) => {
     <motion.div
       ref={setNodeRef}
       style={style}
-      className="bg-slate-800 w-[350px] h-[500px] max-h-[500px] rounded-md flex flex-col"
+      className="bg-slate-800 w-[350px] h-auto rounded-md flex flex-col"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 20 }}

@@ -25,7 +25,7 @@ export const SignInPage = () => {
   };
 
   return (
-    <div className="bg-[url('https://res.cloudinary.com/ma-cloud/image/upload/v1729896138/findy/BgSignIn_kuh8yv.png')] bg-cover bg-center bg-no-repeat min-h-screen w-full">
+    <div className="bg-[url('public/assets/image/BgSignIn_optimized.webp')] bg-cover bg-center bg-no-repeat min-h-screen w-full">
       <section className="flex flex-col justify-center items-center min-h-screen">
         <Link to="/" className="flex items-center text-6xl font-extrabold tracking-wide mb-10 text-slate-100">
           <img src="./logo.svg" alt="logo" className="h-20 w-20 mr-2 " />
@@ -70,7 +70,7 @@ export const SignInPage = () => {
           </button>
           <h2 className="font-medium text-slate-500 my-3 flex justify-center text-base">O continua con:</h2>
           <button disabled={isAuthenticating} onClick={onGoogle} className="border p-2 border-slate-300 rounded-sm items-center flex justify-center gap-3 hover:bg-slate-50 transition-colors">
-            <img className="size-8" src="https://res.cloudinary.com/ma-cloud/image/upload/v1729896371/findy/google_ovadzb.svg" alt="" />
+            <img className="size-8" src="public/assets/iconsButtons/google.svg" alt="" />
             <p className="font-medium">Google</p>
           </button>
           <div className="flex gap-2 my-6 justify-center">

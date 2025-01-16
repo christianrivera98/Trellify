@@ -14,6 +14,6 @@ export const removeTask = (id:string, dispatch:AppDispatch) => {
   dispatch(deleteTask(id))
 }
 
-export const updateTaskContent = (id: Id, content: string, dispatch: AppDispatch) => {
-  dispatch(updateTask({id, content}))
+export const updateTaskContent = (id: Id, title: string, description:string, dispatch: AppDispatch) => {
+  dispatch(updateTask({id, title, description}))
 }

@@ -303,7 +303,8 @@ export const startNewTask = (columnId: Id) => {
     const taskToAdd: Task = {
       id: generateId(),
       columnId,
-      content: `Tarea nueva`,
+      title: `Tarea nueva`,
+      description: ''
     };
 
     dispatch(addTask(taskToAdd));

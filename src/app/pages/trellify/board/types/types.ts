@@ -15,7 +15,8 @@ export type Column = {
 export type Task = {
     id: Id;
     columnId: Id;
-    content: string;
+    title: string;
+    description: string
 }
 
 export interface Board {

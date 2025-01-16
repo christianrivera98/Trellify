@@ -231,13 +231,14 @@ export const trellifySlice = createSlice({
       });
     },
 
-    updateTask: (state, action: PayloadAction<{ id: Id; content: string }>) => {
-      const { id, content } = action.payload;
+    updateTask: (state, action: PayloadAction<{ id: Id; title: string; description: string }>) => {
+      const { id, title, description } = action.payload;
       const task = state.activeBoard?.lists
         .flatMap((list) => list.tasks)
         .find((task) => task.id === id);
       if (task) {
-        task.content = content;
+        task.title = title;
+        task.description = description;
       }
     },
 

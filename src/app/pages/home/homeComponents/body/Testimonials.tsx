@@ -19,7 +19,7 @@ export const Testimonials = () => {
               className="bg-white p-6 rounded-lg shadow-xl flex items-center text-gray-900 border border-gray-200"
             >
               <img
-                className="w-16 h-16 rounded-full mr-4"
+                className="w-20 h-20 rounded-full mr-4"
                 src={testimonial.photo}
                 alt={testimonial.alt}
               />

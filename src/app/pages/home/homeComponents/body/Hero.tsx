@@ -142,7 +142,7 @@ export const Hero = () => {
         >
           <img
             className="rounded-xl shadow-lg hidden lg:block"
-            src="https://res.cloudinary.com/ma-cloud/image/upload/v1729896236/findy/teamWork_zy7emg.jpg"
+            src="public/assets/image/teamWork_optimized.webp"
             alt="teamWork"
           />
         </motion.div>

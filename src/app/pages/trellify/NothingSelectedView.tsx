@@ -44,7 +44,7 @@ export const NothingSelectedView = () => {
         >
           <img
             className="w-64 md:w-72 lg:w-80"
-            src="https://res.cloudinary.com/ma-cloud/image/upload/v1729900911/findy/imageBg1_l0guwh.svg"
+            src="public/assets/image/imageBg1_optimized.svg"
             alt="Welcome Illustration"
           />
         </motion.div>
