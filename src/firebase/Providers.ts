@@ -12,16 +12,6 @@ interface signInResult {
     errorCode?: string;
 }
 
-interface signUpResult{
-    ok: boolean;
-    email: string | null;
-    displayName: string | null;
-    uid: string | null;
-    errorMessage?: string;
-    errorCode?: string;
-    password: string| null;
-}
-
 // Inicio de sesion con Google
 
 export const signInWithGoogle = async (): Promise<signInResult> => {
@@ -37,9 +27,10 @@ export const signInWithGoogle = async (): Promise<signInResult> => {
         }
     }
 
-    catch(error:any){
-        const errorMessage  = error.message;
-        const errorCode = error.code;
+    catch(error: unknown){
+        const firebaseError = error as { message?: string; code?: string };
+        const errorMessage  = firebaseError.message;
+        const errorCode = firebaseError.code;
 
         return{
             ok: false,
@@ -49,14 +40,12 @@ export const signInWithGoogle = async (): Promise<signInResult> => {
             errorMessage,
             errorCode,
         };
-    } 
-
-    
+    }
 };
 
 // Provedor de crear cuenta con Correo y Contraseña
 
-export const signUpWithEmailPassword = async (email:string, password : string, displayName: string | undefined): Promise<signUpResult | any> => {
+export const signUpWithEmailPassword = async (email:string, password : string, displayName: string | undefined): Promise<signInResult> => {
     try{
         const result = await createUserWithEmailAndPassword(firebaseAuth, email, password);
         const {uid, email:userEmail} = result.user;
@@ -70,47 +59,47 @@ export const signUpWithEmailPassword = async (email:string, password : string, d
         return{
             ok:true,
             email : userEmail,
-            displayName,
+            displayName: displayName ?? null,
             uid
         }
     }
-    catch(error:any){
-        const errorMessage  = error.message;
-        const errorCode = error.code;
+    catch(error: unknown){
+        const firebaseError = error as { message?: string; code?: string };
+        const errorMessage  = firebaseError.message;
+        const errorCode = firebaseError.code;
 
         return{
             ok: false,
             email:null,
             displayName:null ,
             uid:null,
-            password: null,
             errorMessage,
             errorCode,
         };
     }
 }
 
-export const signInWithEmailPassword = async (email:string, password:string) : Promise<signInResult | any> => {
+export const signInWithEmailPassword = async (email:string, password:string) : Promise<signInResult> => {
     try {
         const result = await signInWithEmailAndPassword(firebaseAuth, email, password);
         const {uid, displayName} = result.user
 
         return{
             ok: true,
+            email,
             uid,
             displayName
         }
-    } catch (error:any) {
-
-        const errorMessage  = error.message;
-        const errorCode = error.code;
+    } catch (error: unknown) {
+        const firebaseError = error as { message?: string; code?: string };
+        const errorMessage  = firebaseError.message;
+        const errorCode = firebaseError.code;
 
         return{
             ok: false,
             email:null,
             displayName:null ,
             uid:null,
-            password: null,
             errorMessage,
             errorCode,
         };
@@ -134,10 +123,11 @@ export const signInAsDemo = async (): Promise<signInResult> => {
             displayName: displayName || "Demo User",
             uid,
         };
-    } catch (error: any) {
-        const errorMessage = error.message;
-        const errorCode = error.code;
-  
+    } catch (error: unknown) {
+        const firebaseError = error as { message?: string; code?: string };
+        const errorMessage = firebaseError.message;
+        const errorCode = firebaseError.code;
+
         return {
             ok: false,
             email: null,

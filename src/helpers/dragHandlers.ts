@@ -1,8 +1,8 @@
 import { DragEndEvent, DragOverEvent, DragStartEvent } from "@dnd-kit/core";
-import { AppDispatch } from "../app/store/Store";
-import { reorderColumns, setActiveColumn, setActiveTask, setTask } from "../app/store/trellify/trellifySlice";
+import { AppDispatch } from "../store/Store";
+import { reorderColumns, setActiveColumn, setActiveTask, setTask } from "../store/trellify/trellifySlice";
 import { arrayMove } from "@dnd-kit/sortable";
-import { Column, Id } from "../app/pages/trellify/board/types/types";
+import { Column, Id } from "../features/trellify/board/types/types";
 
 // Manejo de inicio de arrastre
 export const onDragStart = (event: DragStartEvent, dispatch: AppDispatch) => {

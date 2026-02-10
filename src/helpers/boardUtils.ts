@@ -1,9 +1,10 @@
-import { Id } from "../app/pages/trellify/board/types/types";
-import { AppDispatch } from "../app/store/Store";
-import { deleteTask, updateColumn, updateTask } from "../app/store/trellify/trellifySlice";
+import { v4 as uuidv4 } from "uuid";
+import { Id } from "../features/trellify/board/types/types";
+import { AppDispatch } from "../store/Store";
+import { deleteTask, updateColumn, updateTask } from "../store/trellify/trellifySlice";
 
-export function generateId() {
-    return Math.floor(Math.random() * 10001);
+export function generateId(): string {
+    return uuidv4();
   }
 
 export const updateColumnTitle = (id: Id, title:string, dispatch: AppDispatch) => {

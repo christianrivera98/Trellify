@@ -8,8 +8,9 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
-#dist
+dist
 dist-ssr
+.next
 *.local
 
 # Editor directories and files
@@ -26,3 +27,23 @@ dist-ssr
 # local env files
 .env*.local
 .env
+
+# .md files
+*.md
+!README.md
+#Claude
+.claude
+# Optional npm cache directory
+.npm
+# Optional eslint cache
+.eslintcache
+# Optional stylelint cache
+.stylelintcache
+# Mac System files
+.DS_Store
+# Windows System files
+Thumbs.db
+# JetBrains IDEs
+.idea/
+# VS Code settings
+.vscode/
